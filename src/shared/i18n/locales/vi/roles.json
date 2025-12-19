@@ -1,0 +1,28 @@
+{
+  "title": "Vai trò & Quyền",
+  "description": "Quản lý vai trò và quyền",
+  "roles": "Vai trò",
+  "manageRoles": "Quản lý vai trò người dùng và quyền của họ",
+  "comingSoon": "Quản lý vai trò và quyền sẽ được triển khai ở đây.",
+  "permissions": "Quyền",
+  "allPermissions": "Tất cả quyền có sẵn",
+  "noRoles": "Không tìm thấy vai trò",
+  "noPermissions": "Không tìm thấy quyền",
+  "systemRole": "Hệ thống",
+  "resource": "Tài nguyên",
+  "action": "Hành động",
+  "description": "Mô tả",
+  "created": "Tạo lúc",
+  "noDescription": "Không có mô tả",
+  "createRole": "Tạo Vai trò",
+  "createRoleDescription": "Tạo vai trò mới với quyền tùy chỉnh",
+  "roleName": "Tên Vai trò",
+  "roleDescription": "Mô tả Vai trò",
+  "creating": "Đang tạo...",
+  "managePermissions": "Quản lý Quyền",
+  "selectPermissionsForRole": "Chọn quyền để gán cho vai trò này",
+  "cancel": "Hủy",
+  "save": "Lưu",
+  "saving": "Đang lưu..."
+}
+

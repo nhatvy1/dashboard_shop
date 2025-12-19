@@ -1,0 +1,20 @@
+{
+  "loading": "Đang tải...",
+  "error": "Lỗi",
+  "success": "Thành công",
+  "cancel": "Hủy",
+  "save": "Lưu",
+  "delete": "Xóa",
+  "edit": "Sửa",
+  "create": "Tạo",
+  "update": "Cập nhật",
+  "search": "Tìm kiếm",
+  "filter": "Lọc",
+  "actions": "Hành động",
+  "back": "Quay lại",
+  "next": "Tiếp theo",
+  "previous": "Trước",
+  "submit": "Gửi",
+  "pageOf": "Trang {{page}} / {{total}}"
+}
+

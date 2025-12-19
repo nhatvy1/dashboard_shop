@@ -1,0 +1,18 @@
+{
+  "title": "Bảng điều khiển",
+  "welcome": "Chào mừng trở lại, {{name}}!",
+  "totalUsers": "Tổng người dùng",
+  "totalTeams": "Tổng nhóm",
+  "wallets": "Ví",
+  "totalBalance": "Tổng số dư",
+  "registeredUsers": "Người dùng đã đăng ký",
+  "activeTeams": "Nhóm hoạt động",
+  "activeWallets": "Ví hoạt động",
+  "systemBalance": "Số dư hệ thống",
+  "myWallet": "Ví của tôi",
+  "walletBalance": "Số dư ví hiện tại của bạn",
+  "userInfo": "Thông tin người dùng",
+  "accountInformation": "Thông tin tài khoản của bạn",
+  "noWallet": "Không tìm thấy ví"
+}
+
