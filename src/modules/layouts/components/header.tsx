@@ -4,7 +4,7 @@ import Notifications from './notifications'
 
 export default function Header() {
   return (
-    <header className='border-b border-b-gray-200'>
+    <header className='h-16 border-b border-b-gray-200'>
       <div className='flex items-center justify-between px-6 py-3'>
         <div className='flex items-center space-x-3'>
           <div className='flex items-center space-x-2 text-orange-500'>

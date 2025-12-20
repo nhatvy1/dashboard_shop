@@ -77,11 +77,11 @@ export default function DashboardContent() {
           </Button>
         </div>
 
-        <div className='mb-6 grid grid-cols-1 gap-4 md:grid-cols-4'>
-          <StatCard title='Chờ Lấy Hàng' value='0' />
-          <StatCard title='Đã Xử Lý' value='0' />
-          <StatCard title='Đơn Trả hàng/Hoàn tiền/Hủy' value='0' />
-          <StatCard title='Sản Phẩm Bị Tạm Khóa' value='0' />
+        <div className='mb-6 flex gap-4 overflow-x-auto pb-2'>
+          <div className='min-w-[200px] flex-1'><StatCard title='Chờ Lấy Hàng' value='0' /></div>
+          <div className='min-w-[200px] flex-1'><StatCard title='Đã Xử Lý' value='0' /></div>
+          <div className='min-w-[200px] flex-1'><StatCard title='Đơn Trả hàng/Hoàn tiền/Hủy' value='0' /></div>
+          <div className='min-w-[200px] flex-1'><StatCard title='Sản Phẩm Bị Tạm Khóa' value='0' /></div>
         </div>
       </div>
 
@@ -102,16 +102,16 @@ export default function DashboardContent() {
           </div>
         </div>
 
-        <div className='mb-6 grid grid-cols-1 gap-4 md:grid-cols-5'>
-          <StatCard title='Doanh số' value='₫0' subtitle='↗ 0,00%' />
-          <StatCard title='Lượt truy cập' value='0' subtitle='↗ 0,00%' />
-          <StatCard title='Product Clicks' value='0' subtitle='↗ 0,00%' />
-          <StatCard title='Đơn hàng' value='0' subtitle='↗ 0,00%' />
-          <StatCard
+        <div className='mb-6 flex gap-4 overflow-x-auto pb-2'>
+          <div className='min-w-[180px] flex-1'><StatCard title='Doanh số' value='₫0' subtitle='↗ 0,00%' /></div>
+          <div className='min-w-[180px] flex-1'><StatCard title='Lượt truy cập' value='0' subtitle='↗ 0,00%' /></div>
+          <div className='min-w-[180px] flex-1'><StatCard title='Product Clicks' value='0' subtitle='↗ 0,00%' /></div>
+          <div className='min-w-[180px] flex-1'><StatCard title='Đơn hàng' value='0' subtitle='↗ 0,00%' /></div>
+          <div className='min-w-[180px] flex-1'><StatCard
             title='Order Conversion Rate'
             value='0,00%'
             subtitle='↗ 0,00%'
-          />
+          /></div>
         </div>
       </div>
 
@@ -305,27 +305,27 @@ export default function DashboardContent() {
           </Button>
         </div>
 
-        <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
-          <ActionCard
+        <div className='flex gap-4 overflow-x-auto pb-2'>
+          <div className='min-w-[280px] flex-1'><ActionCard
             title='Hoàn thành hồ sơ Shop'
             description='Cung cấp đầy đủ thông tin shop để tăng độ tin cậy'
             icon='mingcute:store-2-line'
             color='bg-blue-100 text-blue-600'
-          />
+          /></div>
 
-          <ActionCard
+          <div className='min-w-[280px] flex-1'><ActionCard
             title='Thêm sản phẩm đầu tiên'
             description='Bắt đầu bán hàng bằng cách thêm sản phẩm'
             icon='mingcute:add-circle-line'
             color='bg-green-100 text-green-600'
-          />
+          /></div>
 
-          <ActionCard
+          <div className='min-w-[280px] flex-1'><ActionCard
             title='Thiết lập vận chuyển'
             description='Cấu hình phương thức và phí vận chuyển'
             icon='mingcute:truck-line'
             color='bg-purple-100 text-purple-600'
-          />
+          /></div>
         </div>
       </div>
     </div>

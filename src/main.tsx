@@ -1,5 +1,6 @@
 import { createRoot } from 'react-dom/client'
 import './index.css'
+import './styles/product-form.css'
 import Routes from './routes'
 import { StrictMode } from 'react'
 

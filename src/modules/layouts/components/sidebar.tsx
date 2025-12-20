@@ -103,7 +103,7 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className='h-full w-64 border-r border-gray-200 bg-white'>
+    <aside className='h-full w-64 border-r border-gray-200 bg-white overflow-y-auto'>
       <nav className=''>
         <ul className='space-y-2'>
           {menuItems.map((item) => (
