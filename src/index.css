@@ -2,3 +2,13 @@
 @import '@heroui/styles';
 
 /* @import './styles/shadow.css'; */
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Improve scroll performance */
+* {
+  scroll-margin-top: 128px; /* Offset for sticky header + nav */
+}

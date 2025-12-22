@@ -65,7 +65,6 @@ function ActionCard({
 export default function DashboardContent() {
   return (
     <div className='space-y-6'>
-      {/* To-do List Section */}
       <div>
         <div className='mb-4 flex items-center justify-between'>
           <h2 className='text-xl font-semibold text-gray-900'>

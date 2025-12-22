@@ -7,8 +7,10 @@ export function LoginPage() {
     <div className='flex min-h-screen flex-col bg-gray-50'>
       <header className='flex w-full items-center justify-between border-b border-gray-200 px-8 py-6'>
         <div className='flex items-center gap-3'>
-          <img src='/logo/ubuntu.png' alt='Shopee' className='h-8' />
-          <span className='text-xl font-semibold text-gray-800'>
+          <div className='flex size-7 items-center justify-center rounded-sm bg-orange-500 text-white'>
+            <span className='text-lg font-semibold'>M</span>
+          </div>
+          <span className='text-xl font-medium text-gray-700'>
             Kênh Người Bán
           </span>
         </div>
@@ -36,7 +38,7 @@ export function LoginPage() {
 
           <div className='flex flex-1 flex-col justify-center rounded-2xl border border-gray-100 bg-white p-10 shadow-2xl'>
             <div className='mx-auto w-full max-w-md'>
-              <h3 className='mb-6 text-xl font-bold text-gray-800'>
+              <h3 className='mb-6 text-xl font-medium text-gray-800'>
                 Đăng nhập
               </h3>
               <form className='space-y-4'>
@@ -65,7 +67,7 @@ export function LoginPage() {
                     className='w-full rounded-md border border-gray-200 shadow-none'
                   />
                 </div>
-                <Button className='w-full rounded-md bg-orange-500/70 hover:bg-orange-500/80'>
+                <Button className='w-full font-normal rounded-md bg-orange-500/70 hover:bg-orange-500/80'>
                   Đăng nhập
                 </Button>
               </form>
@@ -73,29 +75,36 @@ export function LoginPage() {
             <div className='text-left'>
               <Link
                 to='/forgot'
-                className='mt-1 text-sm text-blue-500 hover:underline'
+                className='text-xs text-blue-600 hover:underline'
               >
                 Quên mật khẩu
               </Link>
             </div>
             <div className='relative'>
               <div className='inline-flex w-full items-center justify-center'>
-                <hr className='my-8 h-px w-64 border-0 bg-gray-200' />
+                <hr className='my-6 h-px w-4/5 border-0 bg-gray-200' />
                 <span className='text-heading absolute left-1/2 -translate-x-1/2 bg-white px-3 text-gray-400'>
-                  Hoặc
+                  Or
                 </span>
               </div>
             </div>
             <div className='flex gap-2'>
-              <Button className='w-full rounded-lg bg-white border border-gray-200' variant='tertiary'>
+              <Button
+                className='w-full rounded-lg border border-gray-200 bg-white'
+                variant='tertiary'
+              >
                 <Icon icon='devicon:facebook' />
                 Facebook
               </Button>
-              <Button className='w-full rounded-lg bg-white border border-gray-200' variant='tertiary'>
+              <Button
+                className='w-full rounded-lg border border-gray-200 bg-white'
+                variant='tertiary'
+              >
                 <Icon icon='devicon:google' />
                 Google
               </Button>
             </div>
+            <p className='text-sm mt-5 text-center'>Bạn chưa có tài khoản? <Link to='/register' className='text-orange-500 font-medium hover:underline'>Đăng ký</Link></p>
           </div>
         </div>
       </main>
