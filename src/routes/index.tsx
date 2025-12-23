@@ -21,7 +21,7 @@ const routes = [
       { path: '/', element: <Home />, index: true },
       { path: '/users', element: <div>Users Page</div> },
       {
-        path: '/products/new',
+        path: '/them-san-pham',
         element: <AddProductPage />
       }
     ]

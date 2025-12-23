@@ -1,13 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 import { useInView } from 'framer-motion'
-import NavigationMenu from './navigation-menu'
-import BasicInfoSection from './sections/basic-info-section'
-import ProductImagesSection from './sections/product-images-section'
-import DescriptionSection from './sections/description-section'
-import SaleInfoSection from './sections/sale-info-section'
-import ShippingSection from './sections/shipping-section'
-import SEOSection from './sections/seo-section'
-import ProductFormActions from '../components/product-form-actions'
+import NavigationMenu from '../components/add-product/navigation-menu'
+import BasicInfoSection from '../components/add-product/basic-info-section'
+import ProductImagesSection from '../components/add-product/product-images-section'
+import DescriptionSection from '../components/add-product/description-section'
+import SaleInfoSection from '../components/add-product/sale-info-section'
+import ShippingSection from '../components/add-product/shipping-section'
+import SEOSection from '../components/add-product/seo-section'
 
 const sections = [
   { id: 'basic', title: 'Thông tin cơ bản', component: BasicInfoSection },
@@ -19,10 +18,16 @@ const sections = [
 ]
 
 // Component cho từng section với useInView
-function SectionWrapper({ section, onInView }: { section: any, onInView: (id: string) => void }) {
+function SectionWrapper({
+  section,
+  onInView
+}: {
+  section: any
+  onInView: (id: string) => void
+}) {
   const ref = useRef(null)
-  const isInView = useInView(ref, { 
-    margin: "-144px 0px -40% 0px", // Tăng margin top để detect muộn hơn, giảm bottom để detect sớm hơn
+  const isInView = useInView(ref, {
+    margin: '-144px 0px -40% 0px', // Tăng margin top để detect muộn hơn, giảm bottom để detect sớm hơn
     amount: 0.3 // Tăng threshold lên 30% để chắc chắn section đã vào đủ sâu
   })
 
@@ -54,13 +59,13 @@ export default function AddProductPage() {
     const element = document.getElementById(sectionId)
     if (element) {
       const headerHeight = 64 // Dashboard header height
-      const navHeight = 64 // Navigation menu height  
+      const navHeight = 64 // Navigation menu height
       const offset = headerHeight + navHeight + 16 // Extra padding
-      
+
       // Method 1: Try native scrollIntoView first
       try {
-        element.scrollIntoView({ 
-          behavior: 'smooth', 
+        element.scrollIntoView({
+          behavior: 'smooth',
           block: 'start',
           inline: 'nearest'
         })
@@ -70,12 +75,13 @@ export default function AddProductPage() {
         }, 100)
       } catch (error) {
         // Method 2: Fallback to manual calculation
-        const elementTop = element.getBoundingClientRect().top + window.pageYOffset
+        const elementTop =
+          element.getBoundingClientRect().top + window.pageYOffset
         const targetPosition = elementTop - offset
-        
-        window.scrollTo({ 
-          top: targetPosition, 
-          behavior: 'smooth' 
+
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
         })
       }
     } else {
@@ -91,7 +97,9 @@ export default function AddProductPage() {
         onSectionClick={scrollToSection}
       />
 
-      <div className='mx-auto max-w-6xl pt-6 pb-32'> {/* Giảm pt từ 20 xuống 6 vì đã có nav sticky */}
+      <div className='mx-auto max-w-6xl pt-6 pb-32'>
+        {' '}
+        {/* Giảm pt từ 20 xuống 6 vì đã có nav sticky */}
         <div className='flex gap-8'>
           {/* Form Content */}
           <div className='flex-1 space-y-6'>
@@ -106,7 +114,9 @@ export default function AddProductPage() {
 
           {/* Preview Sidebar */}
           <div className='hidden w-80 xl:block'>
-            <div className='sticky top-32 rounded-lg border bg-white p-6'> {/* Cập nhật top từ 20 thành 32 */}
+            <div className='sticky top-32 rounded-lg border bg-white p-6'>
+              {' '}
+              {/* Cập nhật top từ 20 thành 32 */}
               <h3 className='mb-4 text-lg font-semibold'>Xem trước sản phẩm</h3>
               <div className='text-sm text-gray-500'>
                 <div className='mb-4 flex aspect-square items-center justify-center rounded-lg bg-gray-100'>
@@ -120,7 +130,7 @@ export default function AddProductPage() {
         </div>
       </div>
 
-      <ProductFormActions />
+      {/* <ProductFormActions /> */}
     </div>
   )
 }
