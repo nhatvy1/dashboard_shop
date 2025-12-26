@@ -1,3 +1,5 @@
+import { Input, Label } from '@heroui/react'
+
 export default function BasicInfoSection() {
   return (
     <div className='rounded-lg border bg-white p-6'>
@@ -11,33 +13,20 @@ export default function BasicInfoSection() {
       </div>
 
       <div className='space-y-6'>
-        {/* Tên sản phẩm */}
         <div>
-          <label className='mb-2 block text-sm font-medium text-gray-900'>
-            Tên sản phẩm *
-          </label>
-          <input
-            type='text'
-            className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-500'
+          <Label htmlFor='product_name'>Tên sản phẩm</Label>
+          <Input
+            id='product_name'
             placeholder='Nhập tên sản phẩm'
-            maxLength={120}
+            className='w-full rounded-lg border border-gray-300 bg-transparent px-3 py-2 text-base'
           />
           <p className='mt-1 text-xs text-gray-400'>0/120 ký tự</p>
         </div>
 
-        {/* Danh mục */}
         <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
           <div>
-            <label className='mb-2 block text-sm font-medium text-gray-900'>
-              Ngành hàng *
-            </label>
-            <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-orange-500'>
-              <option>Chọn ngành hàng</option>
-              <option>Thời trang nam</option>
-              <option>Thời trang nữ</option>
-              <option>Điện thoại & Phụ kiện</option>
-              <option>Máy tính & Laptop</option>
-            </select>
+            <Label htmlFor='categories'>Ngành hàng</Label>
+            
           </div>
 
           <div>

@@ -3,6 +3,7 @@ import { LoginPage } from '../modules/auth/page/login'
 import AddProductPage from '../modules/products/pages/add-product'
 import { DashboardLayout } from '../modules/layouts'
 import Home from '../modules/home/components/home'
+import ChatHomePage from '../modules/chat/pages/chat-home-page'
 
 const routes = [
   {
@@ -23,8 +24,12 @@ const routes = [
       {
         path: '/them-san-pham',
         element: <AddProductPage />
-      }
+      },
     ]
+  },
+  {
+    path: '/tin-nhan',
+    element: <ChatHomePage />
   }
 ]
 
