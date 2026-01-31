@@ -11,7 +11,7 @@ export default function DashboardLayout() {
         <Sidebar />
 
         <main className='flex-1 overflow-auto'>
-          <div className=''>
+          <div className='p-6'>
             <div className='min-w-[1200px]'>
               <Outlet />
             </div>
