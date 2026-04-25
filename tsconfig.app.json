@@ -25,12 +25,12 @@
       "@/shared/*": ["./src/shared/*"],
       "@/routes/*": ["./src/routes/*"],
       "@/styles/*": ["./src/styles/*"],
-      "@/layouts/*": ["./src/modules/layouts/*"],
+      "@/layouts/*": ["src/features/layouts/*"],
       "@/commons/*": ["./src/modules/commons/*"],
-      "@/auth/*": ["./src/modules/auth/*"],
+      "@/auth/*": ["src/features/auth/*"],
       "@/products/*": ["./src/modules/products/*"],
-      "@/users/*": ["./src/modules/users/*"],
-      "@/home/*": ["./src/modules/home/*"],
+      "@/users/*": ["./src/features/users/*"],
+      "@/home/*": ["./src/features/home/*"],
       "@/chat/*": ["./src/modules/chat/*"]
     },
 

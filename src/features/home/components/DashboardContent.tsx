@@ -2,12 +2,14 @@ import { Button, Card } from '@heroui/react'
 import { Icon } from '@iconify/react'
 import { useThemeStore } from '@/shared/stores/theme-store'
 
+/* ===== STAT CARD WITH ACCENT BAR ===== */
 interface StatCardProps {
   title: string
   value: string | number
   subtitle?: string
   trend?: 'up' | 'down' | 'neutral'
   color?: 'default' | 'primary' | 'warning' | 'success'
+  accentColor?: 'blue' | 'green' | 'purple' | 'amber'
 }
 
 function StatCard({
@@ -15,7 +17,8 @@ function StatCard({
   value,
   subtitle,
   trend = 'neutral',
-  color = 'default'
+  color = 'default',
+  accentColor = 'blue'
 }: StatCardProps) {
   const { theme } = useThemeStore()
   const isDark = theme === 'dark'
@@ -47,13 +50,16 @@ function StatCard({
 
   return (
     <Card
-      className='card-hover border'
+      className='card-hover relative overflow-hidden border'
       style={{
         backgroundColor: style.bg,
         borderColor: style.border,
         boxShadow: 'var(--shadow-sm)',
       }}
     >
+      {/* Accent bar */}
+      <div className={`stat-accent-bar ${accentColor}`} />
+
       <Card.Content className='p-5'>
         <div className='text-center'>
           <h3
@@ -81,6 +87,42 @@ function StatCard({
         </div>
       </Card.Content>
     </Card>
+  )
+}
+
+/* ===== BAR CHART COMPONENT ===== */
+function BarChart({
+  data,
+  labels
+}: {
+  data: number[]
+  labels: string[]
+}) {
+  const maxVal = Math.max(...data)
+
+  return (
+    <div className='flex items-end justify-between gap-2 h-24'>
+      {data.map((val, i) => {
+        const heightPct = (val / maxVal) * 100
+        return (
+          <div key={i} className='flex flex-col items-center gap-1.5 flex-1'>
+            <div
+              className='dash-bar w-full'
+              style={{
+                height: `${heightPct}%`,
+                animationDelay: `${i * 0.05}s`
+              }}
+            />
+            <span
+              className='text-xs'
+              style={{ color: 'var(--muted-foreground)' }}
+            >
+              {labels[i]}
+            </span>
+          </div>
+        )
+      })}
+    </div>
   )
 }
 
@@ -132,9 +174,24 @@ export default function DashboardContent() {
   const isDark = theme === 'dark'
 
   return (
-    <div className='space-y-8'>
-      {/* Stats Section */}
-      <div>
+    <div className='relative'>
+      <div className='dash-grid-bg' />
+      <div className='dash-sq' />
+      <div className='dash-sq' />
+      <div className='dash-sq' />
+      <div className='dash-sq' />
+      <div className='dash-sq' />
+      <div className='dash-sq' />
+      <div className='dash-orb dash-orb-1' />
+      <div className='dash-orb dash-orb-2' />
+      <div className='dash-orb dash-orb-3' />
+
+      <div className='relative z-10'>
+      <div
+        className='rounded-xl'
+        
+      >
+        <div className='space-y-8'>
         <div className='mb-5 flex items-center justify-between'>
           <h2
             className='text-lg font-semibold'
@@ -143,7 +200,7 @@ export default function DashboardContent() {
             Danh sách cần làm
           </h2>
           <Button
-            variant='flat'
+            variant='secondary'
             size='sm'
             className='text-primary'
           >
@@ -153,10 +210,10 @@ export default function DashboardContent() {
         </div>
 
         <div className='mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4'>
-          <StatCard title='Chờ Lấy Hàng' value='0' color='warning' />
-          <StatCard title='Đã Xử Lý' value='0' color='success' />
-          <StatCard title='Đơn Trả/Hoàn/Hủy' value='0' color='primary' />
-          <StatCard title='Sản Phẩm Bị Tạm Khóa' value='0' color='default' />
+          <StatCard title='Chờ Lấy Hàng' value='0' color='warning' accentColor='amber' />
+          <StatCard title='Đã Xử Lý' value='0' color='success' accentColor='green' />
+          <StatCard title='Đơn Trả/Hoàn/Hủy' value='0' color='primary' accentColor='blue' />
+          <StatCard title='Sản Phẩm Bị Tạm Khóa' value='0' color='default' accentColor='purple' />
         </div>
       </div>
 
@@ -176,7 +233,7 @@ export default function DashboardContent() {
             >
               Hôm nay
             </span>
-            <Button variant='flat' size='sm' className='text-primary'>
+            <Button variant='secondary' size='sm' className='text-primary'>
               Xem thêm
               <Icon icon='lucide:arrow-right' className='ml-1 h-4 w-4' />
             </Button>
@@ -184,11 +241,11 @@ export default function DashboardContent() {
         </div>
 
         <div className='mb-6 grid grid-cols-2 gap-4 lg:grid-cols-5'>
-          <StatCard title='Doanh số' value='₫0' subtitle='↗ 0,00%' trend='up' color='primary' />
-          <StatCard title='Lượt truy cập' value='0' subtitle='↗ 0,00%' trend='up' color='primary' />
-          <StatCard title='Product Clicks' value='0' subtitle='↘ 0,00%' trend='down' color='primary' />
-          <StatCard title='Đơn hàng' value='0' subtitle='↗ 0,00%' trend='up' color='primary' />
-          <StatCard title='Order Conversion' value='0,00%' subtitle='↗ 0,00%' trend='up' color='primary' />
+          <StatCard title='Doanh số' value='₫0' subtitle='↗ 0,00%' trend='up' color='primary' accentColor='blue' />
+          <StatCard title='Lượt truy cập' value='0' subtitle='↗ 0,00%' trend='up' color='primary' accentColor='green' />
+          <StatCard title='Product Clicks' value='0' subtitle='↘ 0,00%' trend='down' color='primary' accentColor='purple' />
+          <StatCard title='Đơn hàng' value='0' subtitle='↗ 0,00%' trend='up' color='primary' accentColor='amber' />
+          <StatCard title='Order Conversion' value='0,00%' subtitle='↗ 0,00%' trend='up' color='primary' accentColor='blue' />
         </div>
       </div>
 
@@ -201,7 +258,7 @@ export default function DashboardContent() {
           >
             Hiệu quả bán hàng
           </h2>
-          <Button variant='flat' size='sm' className='text-primary'>
+          <Button variant='secondary' size='sm' className='text-primary'>
             Xem thêm
             <Icon icon='lucide:arrow-right' className='ml-1 h-4 w-4' />
           </Button>
@@ -259,7 +316,7 @@ export default function DashboardContent() {
             >
               Dịch vụ Shopee
             </h2>
-            <Button variant='flat' size='sm' className='text-primary'>
+            <Button variant='secondary' size='sm' className='text-primary'>
               Xem thêm
               <Icon icon='lucide:arrow-right' className='ml-1 h-4 w-4' />
             </Button>
@@ -320,7 +377,7 @@ export default function DashboardContent() {
             >
               Tin Nổi Bật
             </h2>
-            <Button variant='flat' size='sm' className='text-primary'>
+            <Button variant='secondary' size='sm' className='text-primary'>
               Xem thêm
               <Icon icon='lucide:arrow-right' className='ml-1 h-4 w-4' />
             </Button>
@@ -361,7 +418,7 @@ export default function DashboardContent() {
             >
               Tăng đơn cùng KOL
             </h2>
-            <Button variant='flat' size='sm' className='text-primary'>
+            <Button variant='secondary' size='sm' className='text-primary'>
               Thêm
               <Icon icon='lucide:plus' className='ml-1 h-4 w-4' />
             </Button>
@@ -413,7 +470,7 @@ export default function DashboardContent() {
             >
               Livestream
             </h2>
-            <Button variant='flat' size='sm' className='text-primary'>
+            <Button variant='secondary' size='sm' className='text-primary'>
               Xem thêm
               <Icon icon='lucide:arrow-right' className='ml-1 h-4 w-4' />
             </Button>
@@ -480,7 +537,7 @@ export default function DashboardContent() {
           >
             Nhiệm Vụ Người Bán
           </h2>
-          <Button variant='flat' size='sm' className='text-primary'>
+          <Button variant='secondary' size='sm' className='text-primary'>
             Xem thêm
             <Icon icon='lucide:arrow-right' className='ml-1 h-4 w-4' />
           </Button>
@@ -512,6 +569,36 @@ export default function DashboardContent() {
           />
         </div>
       </div>
+
+      {/* Revenue Chart Section */}
+      <div>
+        <div className='mb-5 flex items-center justify-between'>
+          <h2
+            className='text-lg font-semibold'
+            style={{ color: 'var(--card-foreground)' }}
+          >
+            Doanh thu — 7 ngày gần đây
+          </h2>
+          <Button variant='secondary' size='sm' className='text-primary'>
+            Xem chi tiết
+            <Icon icon='lucide:arrow-right' className='ml-1 h-4 w-4' />
+          </Button>
+        </div>
+
+        <Card
+          className='card-hover border'
+          style={{ borderColor: 'var(--border)', boxShadow: 'var(--shadow-sm)' }}
+        >
+          <Card.Content className='p-5'>
+            <BarChart
+              data={[45, 60, 40, 80, 55, 95, 70]}
+              labels={['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN']}
+            />
+          </Card.Content>
+        </Card>
+      </div>
+    </div>
+    </div>
     </div>
   )
 }

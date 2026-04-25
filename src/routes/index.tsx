@@ -1,9 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router'
-import { LoginPage } from '../modules/auth/page/login'
-import AddProductPage from '../modules/products/pages/add-product'
-import { DashboardLayout } from '../modules/layouts'
-import Home from '../modules/home/components/home'
-import ChatHomePage from '../modules/chat/pages/chat-home-page'
+import { LoginPage } from '../features/auth/page/login'
+import { DashboardLayout } from '../features/layouts'
+import Home from '@/features/home/pages/home-page'
 
 // Pages
 import UsersPage from '@/features/users/pages/users-page'
@@ -67,10 +65,6 @@ const routes = [
       { path: 'settings', element: <SettingsPage /> },
     ]
   },
-  {
-    path: '/tin-nhan',
-    element: <ChatHomePage />
-  }
 ]
 
 export default function Routes() {

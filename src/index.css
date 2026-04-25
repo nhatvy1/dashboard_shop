@@ -118,6 +118,24 @@ html.dark body {
 /* Card hover effect */
 .card-hover {
   transition: all 0.2s ease;
+  position: relative;
+}
+
+.card-hover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+html:not(.dark) .card-hover::after {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+html.dark .card-hover::after {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .card-hover:hover {
@@ -134,4 +152,138 @@ button, a, input, select {
 :root {
   --heroui-primary: var(--primary);
   --heroui-primary-foreground: var(--primary-foreground);
+}
+
+/* ===== ENHANCED DASHBOARD EFFECTS ===== */
+
+/* Grid background with animation */
+.dash-grid-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+html:not(.dark) .dash-grid-bg {
+  background-image:
+    linear-gradient(rgba(59, 130, 246, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: gridShiftLight 20s linear infinite;
+}
+
+html.dark .dash-grid-bg {
+  background-image:
+    linear-gradient(rgba(59, 130, 246, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: gridShiftDark 20s linear infinite;
+}
+
+@keyframes gridShiftLight {
+  0%   { background-position: 0 0; }
+  100% { background-position: 40px 40px; }
+}
+
+@keyframes gridShiftDark {
+  0%   { background-position: 0 0; }
+  100% { background-position: 40px 40px; }
+}
+
+/* Floating squares */
+.dash-sq {
+  position: absolute;
+  border: 1px solid;
+  border-radius: 6px;
+  opacity: 0;
+  animation: floatSqUp linear infinite;
+  pointer-events: none;
+}
+
+html:not(.dark) .dash-sq {
+  border-color: rgba(59, 130, 246, 0.15);
+}
+
+html.dark .dash-sq {
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
+@keyframes floatSqUp {
+  0%   { transform: translateY(0) rotate(0deg);   opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 0.5; }
+  100% { transform: translateY(-320px) rotate(180deg); opacity: 0; }
+}
+
+html:not(.dark) .dash-sq:nth-child(1) { width:14px; height:14px; left:8%;  bottom:-20px; animation-duration:9s;  animation-delay:0s;   background: rgba(59,130,246,0.05); }
+html:not(.dark) .dash-sq:nth-child(2) { width:22px; height:22px; left:20%; bottom:-30px; animation-duration:12s; animation-delay:1.5s; background: rgba(99,102,241,0.05); }
+html:not(.dark) .dash-sq:nth-child(3) { width:10px; height:10px; left:35%; bottom:-15px; animation-duration:8s;  animation-delay:3s;   background: rgba(34,197,94,0.05); }
+html:not(.dark) .dash-sq:nth-child(4) { width:18px; height:18px; left:52%; bottom:-25px; animation-duration:11s; animation-delay:0.8s; background: rgba(59,130,246,0.06); }
+html:not(.dark) .dash-sq:nth-child(5) { width:12px; height:12px; left:68%; bottom:-20px; animation-duration:10s; animation-delay:2.5s; background: rgba(99,102,241,0.04); }
+html:not(.dark) .dash-sq:nth-child(6) { width:24px; height:24px; left:80%; bottom:-35px; animation-duration:13s; animation-delay:0.2s; background: rgba(59,130,246,0.03); }
+
+html.dark .dash-sq:nth-child(1) { width:18px; height:18px; left:8%;  bottom:-20px; animation-duration:9s;  animation-delay:0s;   background: rgba(59,130,246,0.12); }
+html.dark .dash-sq:nth-child(2) { width:28px; height:28px; left:20%; bottom:-30px; animation-duration:12s; animation-delay:1.5s; background: rgba(99,102,241,0.10); }
+html.dark .dash-sq:nth-child(3) { width:12px; height:12px; left:35%; bottom:-15px; animation-duration:8s;  animation-delay:3s;   background: rgba(34,197,94,0.10); }
+html.dark .dash-sq:nth-child(4) { width:22px; height:22px; left:52%; bottom:-25px; animation-duration:11s; animation-delay:0.8s; background: rgba(59,130,246,0.14); }
+html.dark .dash-sq:nth-child(5) { width:16px; height:16px; left:68%; bottom:-20px; animation-duration:10s; animation-delay:2.5s; background: rgba(99,102,241,0.08); }
+html.dark .dash-sq:nth-child(6) { width:30px; height:30px; left:80%; bottom:-35px; animation-duration:13s; animation-delay:0.2s; background: rgba(59,130,246,0.07); }
+
+/* Glow orbs */
+.dash-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+html:not(.dark) .dash-orb-1 { width:180px; height:180px; top:-50px;  left:-40px;  background: #3b82f6; opacity: 0.15; }
+html:not(.dark) .dash-orb-2 { width:160px; height:160px; bottom:-50px; right:-30px; background: #6366f1; opacity: 0.12; }
+html:not(.dark) .dash-orb-3 { width:120px; height:120px; top:50%; left:50%; transform:translate(-50%,-50%); background: #22c55e; opacity: 0.08; }
+
+html.dark .dash-orb-1 { width:200px; height:200px; top:-60px;  left:-40px;  background: #3b82f6; opacity: 0.18; }
+html.dark .dash-orb-2 { width:180px; height:180px; bottom:-50px; right:-30px; background: #6366f1; opacity: 0.18; }
+html.dark .dash-orb-3 { width:120px; height:120px; top:50%; left:50%; transform:translate(-50%,-50%); background: #22c55e; opacity: 0.10; }
+
+/* Stat card accent bar */
+.stat-accent-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 10px 10px 0 0;
+}
+
+html:not(.dark) .stat-accent-bar.blue   { background: linear-gradient(90deg, #3b82f6, transparent); }
+html:not(.dark) .stat-accent-bar.green  { background: linear-gradient(90deg, #16a34a, transparent); }
+html:not(.dark) .stat-accent-bar.purple { background: linear-gradient(90deg, #9333ea, transparent); }
+html:not(.dark) .stat-accent-bar.amber  { background: linear-gradient(90deg, #f59e0b, transparent); }
+
+html.dark .stat-accent-bar.blue   { background: linear-gradient(90deg, #3b82f6, transparent); }
+html.dark .stat-accent-bar.green  { background: linear-gradient(90deg, #22c55e, transparent); }
+html.dark .stat-accent-bar.purple { background: linear-gradient(90deg, #a78bfa, transparent); }
+html.dark .stat-accent-bar.amber  { background: linear-gradient(90deg, #f59e0b, transparent); }
+
+/* Animated bar chart */
+.dash-bar {
+  border-radius: 4px 4px 0 0;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  animation: barGrow 0.8s ease both;
+}
+
+html:not(.dark) .dash-bar {
+  background: linear-gradient(to top, #2563eb, #6366f1);
+}
+
+html.dark .dash-bar {
+  background: linear-gradient(to top, #3b82f6, #6366f1);
+}
+
+.dash-bar:hover { opacity: 1; }
+
+@keyframes barGrow {
+  from { transform: scaleY(0); transform-origin: bottom; }
+  to   { transform: scaleY(1); }
 }
