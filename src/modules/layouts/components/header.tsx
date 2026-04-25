@@ -1,22 +1,33 @@
 import { UserProfileDropdown } from './user-profile-dropdown'
 import Notifications from './notifications'
+import { Icon } from '@iconify/react'
+import { useThemeStore } from '@/shared/stores/theme-store'
 
 export default function Header() {
+  const { theme, toggleTheme } = useThemeStore()
+  const isDark = theme === 'dark'
+
   return (
-    <header className='h-16 border-b border-b-gray-200'>
-      <div className='flex items-center justify-between px-6 py-3'>
-        <div className='flex items-center space-x-3'>
-          <div className='flex size-7 items-center justify-center rounded-sm bg-orange-500 text-white'>
-            <span className='text-lg font-semibold'>M</span>
-          </div>
-          <span className='text-lg'>Kênh Người Bán</span>
-        </div>
+    <header
+      className='flex h-16 items-center justify-between border-b px-6'
+      style={{ borderColor: 'var(--border)', backgroundColor: 'var(--card)' }}
+    >
+      <div className='flex items-center space-x-3'>
+        {/* Empty - logo moved to sidebar */}
+      </div>
 
-        <div className='flex items-center space-x-4'>
-          <Notifications />
+      <div className='flex items-center space-x-4'>
+        <button
+          onClick={toggleTheme}
+          className='rounded-md p-2 transition-colors'
+          style={{ color: 'var(--muted-foreground)' }}
+        >
+          <Icon icon={isDark ? 'lucide:sun' : 'lucide:moon'} className='h-5 w-5' />
+        </button>
 
-          <UserProfileDropdown />
-        </div>
+        <Notifications />
+
+        <UserProfileDropdown />
       </div>
     </header>
   )

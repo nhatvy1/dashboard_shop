@@ -1,10 +1,12 @@
 import { Button, Card } from '@heroui/react'
 import { Icon } from '@iconify/react'
+import { useThemeStore } from '@/shared/stores/theme-store'
 
 interface StatCardProps {
   title: string
   value: string | number
   subtitle?: string
+  trend?: 'up' | 'down' | 'neutral'
   color?: 'default' | 'primary' | 'warning' | 'success'
 }
 
@@ -12,22 +14,70 @@ function StatCard({
   title,
   value,
   subtitle,
+  trend = 'neutral',
   color = 'default'
 }: StatCardProps) {
-  const colorClasses = {
-    default: 'bg-white',
-    primary: 'bg-blue-50 border-blue-200',
-    warning: 'bg-orange-50 border-orange-200',
-    success: 'bg-green-50 border-green-200'
+  const { theme } = useThemeStore()
+  const isDark = theme === 'dark'
+
+  const colorStyles = {
+    default: {
+      bg: isDark ? 'var(--card)' : '#ffffff',
+      border: 'var(--border)',
+      iconBg: isDark ? 'var(--muted)' : '#f1f5f9',
+    },
+    primary: {
+      bg: isDark ? 'rgba(59, 130, 246, 0.1)' : '#eff6ff',
+      border: isDark ? 'rgba(59, 130, 246, 0.3)' : '#bfdbfe',
+      iconBg: isDark ? 'rgba(59, 130, 246, 0.2)' : '#dbeafe',
+    },
+    warning: {
+      bg: isDark ? 'rgba(245, 158, 11, 0.1)' : '#fffbeb',
+      border: isDark ? 'rgba(245, 158, 11, 0.3)' : '#fde68a',
+      iconBg: isDark ? 'rgba(245, 158, 11, 0.2)' : '#fef3c7',
+    },
+    success: {
+      bg: isDark ? 'rgba(34, 197, 94, 0.1)' : '#f0fdf4',
+      border: isDark ? 'rgba(34, 197, 94, 0.3)' : '#bbf7d0',
+      iconBg: isDark ? 'rgba(34, 197, 94, 0.2)' : '#dcfce7',
+    },
   }
 
+  const style = colorStyles[color]
+
   return (
-    <Card className={`${colorClasses[color]} border`}>
-      <Card.Content className='p-6'>
+    <Card
+      className='card-hover border'
+      style={{
+        backgroundColor: style.bg,
+        borderColor: style.border,
+        boxShadow: 'var(--shadow-sm)',
+      }}
+    >
+      <Card.Content className='p-5'>
         <div className='text-center'>
-          <h3 className='text-2xl font-bold text-gray-900'>{value}</h3>
-          <p className='mt-1 text-sm text-gray-600'>{title}</p>
-          {subtitle && <p className='mt-1 text-xs text-gray-500'>{subtitle}</p>}
+          <h3
+            className='text-2xl font-semibold'
+            style={{ color: 'var(--card-foreground)' }}
+          >
+            {value}
+          </h3>
+          <p
+            className='mt-1.5 text-sm'
+            style={{ color: 'var(--muted-foreground)' }}
+          >
+            {title}
+          </p>
+          {subtitle && (
+            <p
+              className={`mt-1 text-xs font-medium ${
+                trend === 'up' ? 'text-green-600' : trend === 'down' ? 'text-red-500' : ''
+              }`}
+              style={{ color: trend === 'up' ? 'var(--accent)' : trend === 'down' ? '#ef4444' : 'var(--muted-foreground)' }}
+            >
+              {subtitle}
+            </p>
+          )}
         </div>
       </Card.Content>
     </Card>
@@ -38,23 +88,38 @@ function ActionCard({
   title,
   description,
   icon,
-  color
+  iconBg,
+  iconColor
 }: {
   title: string
   description: string
   icon: string
-  color: string
+  iconBg: string
+  iconColor: string
 }) {
   return (
-    <Card className='cursor-pointer border border-gray-200 transition-shadow hover:shadow-md'>
+    <Card className='card-hover cursor-pointer border' style={{ borderColor: 'var(--border)', boxShadow: 'var(--shadow-sm)' }}>
       <Card.Content className='p-4'>
-        <div className='flex items-start space-x-4'>
-          <div className={`rounded-lg p-2 ${color}`}>
-            <Icon icon={icon} className='h-6 w-6' />
+        <div className='flex items-start space-x-3'>
+          <div
+            className='rounded-lg p-2.5'
+            style={{ backgroundColor: iconBg }}
+          >
+            <Icon icon={icon} className='h-5 w-5' style={{ color: iconColor }} />
           </div>
           <div className='flex-1'>
-            <h4 className='text-sm font-semibold text-gray-900'>{title}</h4>
-            <p className='mt-1 text-xs text-gray-600'>{description}</p>
+            <h4
+              className='text-sm font-medium'
+              style={{ color: 'var(--card-foreground)' }}
+            >
+              {title}
+            </h4>
+            <p
+              className='mt-1 text-xs leading-relaxed'
+              style={{ color: 'var(--muted-foreground)' }}
+            >
+              {description}
+            </p>
           </div>
         </div>
       </Card.Content>
@@ -63,116 +128,181 @@ function ActionCard({
 }
 
 export default function DashboardContent() {
+  const { theme } = useThemeStore()
+  const isDark = theme === 'dark'
+
   return (
-    <div className='space-y-6'>
+    <div className='space-y-8'>
+      {/* Stats Section */}
       <div>
-        <div className='mb-4 flex items-center justify-between'>
-          <h2 className='text-xl font-semibold text-gray-900'>
+        <div className='mb-5 flex items-center justify-between'>
+          <h2
+            className='text-lg font-semibold'
+            style={{ color: 'var(--card-foreground)' }}
+          >
             Danh sách cần làm
           </h2>
-          <Button variant='primary' size='sm'>
-            Xem thêm{' '}
-            <Icon icon='mingcute:right-line' className='ml-1 h-4 w-4' />
+          <Button
+            variant='flat'
+            size='sm'
+            className='text-primary'
+          >
+            Xem thêm
+            <Icon icon='lucide:arrow-right' className='ml-1 h-4 w-4' />
           </Button>
         </div>
 
-        <div className='mb-6 flex gap-4 overflow-x-auto pb-2'>
-          <div className='min-w-[200px] flex-1'><StatCard title='Chờ Lấy Hàng' value='0' /></div>
-          <div className='min-w-[200px] flex-1'><StatCard title='Đã Xử Lý' value='0' /></div>
-          <div className='min-w-[200px] flex-1'><StatCard title='Đơn Trả hàng/Hoàn tiền/Hủy' value='0' /></div>
-          <div className='min-w-[200px] flex-1'><StatCard title='Sản Phẩm Bị Tạm Khóa' value='0' /></div>
+        <div className='mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4'>
+          <StatCard title='Chờ Lấy Hàng' value='0' color='warning' />
+          <StatCard title='Đã Xử Lý' value='0' color='success' />
+          <StatCard title='Đơn Trả/Hoàn/Hủy' value='0' color='primary' />
+          <StatCard title='Sản Phẩm Bị Tạm Khóa' value='0' color='default' />
         </div>
       </div>
 
       {/* Sales Analytics Section */}
       <div>
-        <div className='mb-4 flex items-center justify-between'>
-          <h2 className='text-xl font-semibold text-gray-900'>
+        <div className='mb-5 flex items-center justify-between'>
+          <h2
+            className='text-lg font-semibold'
+            style={{ color: 'var(--card-foreground)' }}
+          >
             Phân Tích Bán Hàng
           </h2>
-          <div className='flex items-center space-x-2'>
-            <span className='text-sm text-gray-500'>
-              Hôm nay 00:00 GMT+7 15:00(DD hiện thay đổi số với biểu qua)
+          <div className='flex items-center space-x-3'>
+            <span
+              className='text-xs'
+              style={{ color: 'var(--muted-foreground)' }}
+            >
+              Hôm nay
             </span>
-            <Button variant='primary' size='sm'>
-              Xem thêm{' '}
-              <Icon icon='mingcute:right-line' className='ml-1 h-4 w-4' />
+            <Button variant='flat' size='sm' className='text-primary'>
+              Xem thêm
+              <Icon icon='lucide:arrow-right' className='ml-1 h-4 w-4' />
             </Button>
           </div>
         </div>
 
-        <div className='mb-6 flex gap-4 overflow-x-auto pb-2'>
-          <div className='min-w-[180px] flex-1'><StatCard title='Doanh số' value='₫0' subtitle='↗ 0,00%' /></div>
-          <div className='min-w-[180px] flex-1'><StatCard title='Lượt truy cập' value='0' subtitle='↗ 0,00%' /></div>
-          <div className='min-w-[180px] flex-1'><StatCard title='Product Clicks' value='0' subtitle='↗ 0,00%' /></div>
-          <div className='min-w-[180px] flex-1'><StatCard title='Đơn hàng' value='0' subtitle='↗ 0,00%' /></div>
-          <div className='min-w-[180px] flex-1'><StatCard
-            title='Order Conversion Rate'
-            value='0,00%'
-            subtitle='↗ 0,00%'
-          /></div>
+        <div className='mb-6 grid grid-cols-2 gap-4 lg:grid-cols-5'>
+          <StatCard title='Doanh số' value='₫0' subtitle='↗ 0,00%' trend='up' color='primary' />
+          <StatCard title='Lượt truy cập' value='0' subtitle='↗ 0,00%' trend='up' color='primary' />
+          <StatCard title='Product Clicks' value='0' subtitle='↘ 0,00%' trend='down' color='primary' />
+          <StatCard title='Đơn hàng' value='0' subtitle='↗ 0,00%' trend='up' color='primary' />
+          <StatCard title='Order Conversion' value='0,00%' subtitle='↗ 0,00%' trend='up' color='primary' />
         </div>
       </div>
 
       {/* Performance Section */}
       <div>
-        <div className='mb-4 flex items-center justify-between'>
-          <h2 className='text-xl font-semibold text-gray-900'>
+        <div className='mb-5 flex items-center justify-between'>
+          <h2
+            className='text-lg font-semibold'
+            style={{ color: 'var(--card-foreground)' }}
+          >
             Hiệu quả bán hàng
           </h2>
-          <Button variant='primary' size='sm'>
-            Xem thêm{' '}
-            <Icon icon='mingcute:right-line' className='ml-1 h-4 w-4' />
+          <Button variant='flat' size='sm' className='text-primary'>
+            Xem thêm
+            <Icon icon='lucide:arrow-right' className='ml-1 h-4 w-4' />
           </Button>
         </div>
 
-        <Card className='mb-6'>
-          <Card.Content className='p-6'>
+        <Card
+          className='card-hover mb-6 border'
+          style={{ borderColor: 'var(--border)', boxShadow: 'var(--shadow-sm)' }}
+        >
+          <Card.Content className='p-5'>
             <div className='flex items-center space-x-4'>
-              <Icon
-                icon='mingcute:calendar-line'
-                className='h-8 w-8 text-orange-500'
-              />
+              <div
+                className='flex size-12 items-center justify-center rounded-xl'
+                style={{ backgroundColor: 'rgba(245, 158, 11, 0.1)' }}
+              >
+                <Icon
+                  icon='lucide:calendar-check'
+                  className='h-6 w-6'
+                  style={{ color: '#f59e0b' }}
+                />
+              </div>
               <div className='flex-1'>
-                <p className='text-sm text-gray-600'>Xuất sắc</p>
-                <p className='text-xs text-gray-500'>Tất cả chỉ số đều tốt</p>
+                <p
+                  className='text-sm font-medium'
+                  style={{ color: 'var(--card-foreground)' }}
+                >
+                  Xuất sắc
+                </p>
+                <p
+                  className='text-xs'
+                  style={{ color: 'var(--muted-foreground)' }}
+                >
+                  Tất cả chỉ số đều tốt
+                </p>
+              </div>
+              <div
+                className='rounded-full px-3 py-1 text-xs font-medium'
+                style={{ backgroundColor: 'rgba(34, 197, 94, 0.1)', color: 'var(--accent)' }}
+              >
+                Tốt
               </div>
             </div>
           </Card.Content>
         </Card>
       </div>
 
-      {/* Two column layout for remaining sections */}
+      {/* Two column layout */}
       <div className='grid grid-cols-1 gap-6 lg:grid-cols-2'>
         {/* Shopee Services */}
         <div>
-          <div className='mb-4 flex items-center justify-between'>
-            <h2 className='text-xl font-semibold text-gray-900'>
-              Dịch vụ Hiển thị Shopee
+          <div className='mb-5 flex items-center justify-between'>
+            <h2
+              className='text-lg font-semibold'
+              style={{ color: 'var(--card-foreground)' }}
+            >
+              Dịch vụ Shopee
             </h2>
-            <Button variant='primary' size='sm'>
-              Xem thêm{' '}
-              <Icon icon='mingcute:right-line' className='ml-1 h-4 w-4' />
+            <Button variant='flat' size='sm' className='text-primary'>
+              Xem thêm
+              <Icon icon='lucide:arrow-right' className='ml-1 h-4 w-4' />
             </Button>
           </div>
 
-          <Card className='border border-orange-200 bg-orange-50'>
-            <Card.Content className='p-6'>
+          <Card
+            className='card-hover border'
+            style={{
+              borderColor: 'rgba(245, 158, 11, 0.3)',
+              backgroundColor: isDark ? 'rgba(245, 158, 11, 0.05)' : 'rgba(245, 158, 11, 0.03)',
+              boxShadow: 'var(--shadow-sm)',
+            }}
+          >
+            <Card.Content className='p-5'>
               <div className='flex items-start space-x-4'>
-                <Icon
-                  icon='mingcute:promotion-line'
-                  className='h-8 w-8 shrink-0 text-orange-500'
-                />
+                <div
+                  className='flex size-12 items-center justify-center rounded-xl'
+                  style={{ backgroundColor: 'rgba(245, 158, 11, 0.15)' }}
+                >
+                  <Icon
+                    icon='lucide:megaphone'
+                    className='h-6 w-6'
+                    style={{ color: '#f59e0b' }}
+                  />
+                </div>
                 <div className='flex-1'>
-                  <h3 className='mb-2 font-semibold text-gray-900'>
-                    Tôi đã hỏa doanh số bán hàng của bạn với Dịch vụ Hiển thị
-                    Shopee!
+                  <h3
+                    className='mb-2 font-medium'
+                    style={{ color: 'var(--card-foreground)' }}
+                  >
+                    Tăng doanh số với Dịch vụ Hiển thị Shopee!
                   </h3>
-                  <p className='mb-4 text-sm text-gray-600'>
-                    Tìm hiểu thêm về Dịch vụ Hiển thị Shopee để tăo chiến dịch
-                    một cách hiệu quả và tốt ưu chi phí.
+                  <p
+                    className='mb-4 text-sm leading-relaxed'
+                    style={{ color: 'var(--muted-foreground)' }}
+                  >
+                    Tìm hiểu thêm về Dịch vụ Hiển thị Shopee để tạo chiến dịch hiệu quả.
                   </p>
-                  <Button variant='danger' size='sm'>
+                  <Button
+                size='sm'
+                    className='text-white'
+                    style={{ backgroundColor: '#f59e0b' }}
+                  >
                     Tìm hiểu thêm
                   </Button>
                 </div>
@@ -183,29 +313,36 @@ export default function DashboardContent() {
 
         {/* Notable Updates */}
         <div>
-          <div className='mb-4 flex items-center justify-between'>
-            <h2 className='text-xl font-semibold text-gray-900'>Tin Nổi Bật</h2>
-            <Button variant='primary' size='sm'>
-              Xem thêm{' '}
-              <Icon icon='mingcute:right-line' className='ml-1 h-4 w-4' />
+          <div className='mb-5 flex items-center justify-between'>
+            <h2
+              className='text-lg font-semibold'
+              style={{ color: 'var(--card-foreground)' }}
+            >
+              Tin Nổi Bật
+            </h2>
+            <Button variant='flat' size='sm' className='text-primary'>
+              Xem thêm
+              <Icon icon='lucide:arrow-right' className='ml-1 h-4 w-4' />
             </Button>
           </div>
 
-          <Card className='mb-4'>
+          <Card className='card-hover border' style={{ borderColor: 'var(--border)', boxShadow: 'var(--shadow-sm)' }}>
             <Card.Content className='p-4'>
               <div className='space-y-3'>
                 <ActionCard
-                  title='🔥 Shopee cập nhật lịch Tết Dương lịch 2026'
-                  description='📢 Bản tin Tết Dương lịch 1.1.2026 ✅ Lịch làm việc của Shopee và các đơn vị vận chuyển ✅ Lịch rút tiền, liên hệ CSKH và các lưu ý khác. Xem ngay👇'
-                  icon='mingcute:calendar-line'
-                  color='bg-red-100 text-red-600'
+                  title='Shopee cập nhật lịch Tết Dương lịch 2026'
+                  description='Lịch làm việc, rút tiền và CSKH dịp Tết Dương lịch. Xem ngay.'
+                  icon='lucide:calendar'
+                  iconBg={isDark ? 'rgba(239, 68, 68, 0.2)' : '#fef2f2'}
+                  iconColor='#ef4444'
                 />
 
                 <ActionCard
-                  title='🎯TỐI ƯU GIÁ THẦU NGAY KHUYẾN MÃI'
-                  description='✅Tăng lực hiện thị ngay Siêu Sale với Tối Ưu Giá Thầu Ngay Khuyến Mãi - hỗ trợ nàng giá thầu tới đa 4 lần. 🎯Giai đoạn áp dụng...'
-                  icon='mingcute:target-line'
-                  color='bg-yellow-100 text-yellow-600'
+                  title='Tối Ưu Giá Thầu Khuyến Mãi'
+                  description='Tăng lực hiển thị với Tối Ưu Giá Thầu - hỗ trợ tới 4x.'
+                  icon='lucide:target'
+                  iconBg={isDark ? 'rgba(245, 158, 11, 0.2)' : '#fffbeb'}
+                  iconColor='#f59e0b'
                 />
               </div>
             </Card.Content>
@@ -217,26 +354,51 @@ export default function DashboardContent() {
       <div className='grid grid-cols-1 gap-6 lg:grid-cols-2'>
         {/* KOL Orders */}
         <div>
-          <div className='mb-4 flex items-center justify-between'>
-            <h2 className='text-xl font-semibold text-gray-900'>
+          <div className='mb-5 flex items-center justify-between'>
+            <h2
+              className='text-lg font-semibold'
+              style={{ color: 'var(--card-foreground)' }}
+            >
               Tăng đơn cùng KOL
             </h2>
-            <Button variant='primary' size='sm'>
-              Thêm <Icon icon='mingcute:add-line' className='ml-1 h-4 w-4' />
+            <Button variant='flat' size='sm' className='text-primary'>
+              Thêm
+              <Icon icon='lucide:plus' className='ml-1 h-4 w-4' />
             </Button>
           </div>
 
-          <Card className='border border-red-200 bg-red-50'>
+          <Card
+            className='card-hover border'
+            style={{
+              borderColor: 'rgba(239, 68, 68, 0.2)',
+              backgroundColor: isDark ? 'rgba(239, 68, 68, 0.05)' : '#fef2f2',
+              boxShadow: 'var(--shadow-sm)',
+            }}
+          >
             <Card.Content className='p-6'>
               <div className='text-center'>
-                <Icon
-                  icon='mingcute:trophy-line'
-                  className='mx-auto mb-4 h-16 w-16 text-red-500'
-                />
-                <h3 className='mb-2 font-semibold text-gray-900'>
-                  Chi thành toàn cho các đơn hàng thành công được mang đến từ
-                  KOL!
+                <div
+                  className='mx-auto mb-4 flex size-16 items-center justify-center rounded-full'
+                  style={{ backgroundColor: 'rgba(239, 68, 68, 0.1)' }}
+                >
+                  <Icon
+                    icon='lucide:trophy'
+                    className='h-8 w-8'
+                    style={{ color: '#ef4444' }}
+                  />
+                </div>
+                <h3
+                  className='mb-2 font-medium'
+                  style={{ color: 'var(--card-foreground)' }}
+                >
+                  Chi trả cho đơn hàng KOL thành công!
                 </h3>
+                <p
+                  className='text-sm'
+                  style={{ color: 'var(--muted-foreground)' }}
+                >
+                  Hợp tác với KOL để tăng đơn hàng
+                </p>
               </div>
             </Card.Content>
           </Card>
@@ -244,49 +406,66 @@ export default function DashboardContent() {
 
         {/* Livestream */}
         <div>
-          <div className='mb-4 flex items-center justify-between'>
-            <h2 className='text-xl font-semibold text-gray-900'>Livestream</h2>
-            <Button variant='primary' size='sm'>
-              Xem thêm{' '}
-              <Icon icon='mingcute:right-line' className='ml-1 h-4 w-4' />
+          <div className='mb-5 flex items-center justify-between'>
+            <h2
+              className='text-lg font-semibold'
+              style={{ color: 'var(--card-foreground)' }}
+            >
+              Livestream
+            </h2>
+            <Button variant='flat' size='sm' className='text-primary'>
+              Xem thêm
+              <Icon icon='lucide:arrow-right' className='ml-1 h-4 w-4' />
             </Button>
           </div>
 
-          <Card>
-            <Card.Content className='p-6'>
-              <h3 className='mb-4 font-semibold text-gray-900'>
+          <Card className='card-hover border' style={{ borderColor: 'var(--border)', boxShadow: 'var(--shadow-sm)' }}>
+            <Card.Content className='p-5'>
+              <h3
+                className='mb-4 font-medium'
+                style={{ color: 'var(--card-foreground)' }}
+              >
                 Bắt đầu Livestream ngay
               </h3>
-              <div className='space-y-4'>
-                <div className='flex items-center justify-between'>
-                  <span className='text-sm text-gray-600'>
-                    Chuẩn bị nội dung
-                  </span>
-                  <Icon
-                    icon='mingcute:check-circle-line'
-                    className='h-5 w-5 text-green-500'
-                  />
-                </div>
-                <div className='flex items-center justify-between'>
-                  <span className='text-sm text-gray-600'>
-                    Thiết lập thiết bị
-                  </span>
-                  <Icon
-                    icon='mingcute:time-line'
-                    className='h-5 w-5 text-gray-400'
-                  />
-                </div>
-                <div className='flex items-center justify-between'>
-                  <span className='text-sm text-gray-600'>
-                    Bắt đầu phát trực tiếp
-                  </span>
-                  <Icon
-                    icon='mingcute:time-line'
-                    className='h-5 w-5 text-gray-400'
-                  />
-                </div>
+              <div className='space-y-3'>
+                {[
+                  { label: 'Chuẩn bị nội dung', status: 'complete' },
+                  { label: 'Thiết lập thiết bị', status: 'pending' },
+                  { label: 'Bắt đầu phát', status: 'pending' },
+                ].map((item, index) => (
+                  <div
+                    key={index}
+                    className='flex items-center justify-between'
+                  >
+                    <span
+                      className='text-sm'
+                      style={{ color: 'var(--foreground)' }}
+                    >
+                      {item.label}
+                    </span>
+                    <Icon
+                      icon={
+                        item.status === 'complete'
+                          ? 'lucide:check-circle'
+                          : 'lucide:clock'
+                      }
+                      className='h-5 w-5'
+                      style={{
+                        color:
+                          item.status === 'complete'
+                            ? 'var(--accent)'
+                            : 'var(--muted-foreground)',
+                      }}
+                    />
+                  </div>
+                ))}
               </div>
-              <Button className='mt-4 w-full'>Bắt đầu Livestream</Button>
+              <Button
+                className='mt-4 w-full bg-primary text-primary-foreground'
+                style={{ backgroundColor: 'var(--primary)', color: 'var(--primary-foreground)' }}
+              >
+                Bắt đầu Livestream
+              </Button>
             </Card.Content>
           </Card>
         </div>
@@ -294,37 +473,43 @@ export default function DashboardContent() {
 
       {/* Task Management Section */}
       <div>
-        <div className='mb-4 flex items-center justify-between'>
-          <h2 className='text-xl font-semibold text-gray-900'>
+        <div className='mb-5 flex items-center justify-between'>
+          <h2
+            className='text-lg font-semibold'
+            style={{ color: 'var(--card-foreground)' }}
+          >
             Nhiệm Vụ Người Bán
           </h2>
-          <Button variant='primary' size='sm'>
-            Xem thêm{' '}
-            <Icon icon='mingcute:right-line' className='ml-1 h-4 w-4' />
+          <Button variant='flat' size='sm' className='text-primary'>
+            Xem thêm
+            <Icon icon='lucide:arrow-right' className='ml-1 h-4 w-4' />
           </Button>
         </div>
 
-        <div className='flex gap-4 overflow-x-auto pb-2'>
-          <div className='min-w-[280px] flex-1'><ActionCard
+        <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
+          <ActionCard
             title='Hoàn thành hồ sơ Shop'
-            description='Cung cấp đầy đủ thông tin shop để tăng độ tin cậy'
-            icon='mingcute:store-2-line'
-            color='bg-blue-100 text-blue-600'
-          /></div>
+            description='Cung cấp đầy đủ thông tin để tăng độ tin cậy'
+            icon='lucide:store'
+            iconBg={isDark ? 'rgba(59, 130, 246, 0.2)' : '#eff6ff'}
+            iconColor='var(--primary)'
+          />
 
-          <div className='min-w-[280px] flex-1'><ActionCard
+          <ActionCard
             title='Thêm sản phẩm đầu tiên'
             description='Bắt đầu bán hàng bằng cách thêm sản phẩm'
-            icon='mingcute:add-circle-line'
-            color='bg-green-100 text-green-600'
-          /></div>
+            icon='lucide:plus-circle'
+            iconBg={isDark ? 'rgba(34, 197, 94, 0.2)' : '#f0fdf4'}
+            iconColor='var(--accent)'
+          />
 
-          <div className='min-w-[280px] flex-1'><ActionCard
+          <ActionCard
             title='Thiết lập vận chuyển'
             description='Cấu hình phương thức và phí vận chuyển'
-            icon='mingcute:truck-line'
-            color='bg-purple-100 text-purple-600'
-          /></div>
+            icon='lucide:truck'
+            iconBg={isDark ? 'rgba(168, 85, 247, 0.2)' : '#faf5ff'}
+            iconColor='#a855f7'
+          />
         </div>
       </div>
     </div>

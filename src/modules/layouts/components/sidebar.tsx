@@ -1,208 +1,203 @@
-import { useState } from 'react'
 import { Icon } from '@iconify/react'
-import { Link } from 'react-router'
+import { Link, useLocation } from 'react-router'
+import { useThemeStore } from '@/shared/stores/theme-store'
 
 interface MenuItem {
   label: string
   icon: string
   path?: string
-  children?: MenuItem[]
 }
 
-const menuItems: MenuItem[] = [
+const ROUTES = {
+  HOME: '/',
+  USERS: '/users',
+  ROLES: '/roles',
+  ARTICLES: '/articles',
+  SERIES: '/series',
+  CATEGORIES: '/categories',
+  IMAGES: '/images',
+  BLOG_POSTS: '/blog-posts',
+  AUTHORS: '/authors',
+  KKPHIM_SYNC: '/kkphim-sync',
+  OPHIM_SYNC: '/ophim-sync',
+  KKMOVIES: '/kkmovies',
+  PAGES: '/pages',
+  MENUS: '/menus',
+  BRANDS: '/brands',
+  SIDEBAR: '/sidebar-config',
+  TRENDING_MOVIES: '/trending-movies',
+  COMMENTS: '/comments',
+  ROBOT_TXT: '/robot-txt',
+  REDIRECTIONS: '/redirections',
+  INFORMATION: '/information',
+  AI_CONFIG: '/ai-config',
+  SETTINGS: '/settings',
+}
+
+const menuSections: { title: string; items: MenuItem[] }[] = [
   {
-    label: 'Quản Lý Đơn Hàng',
-    icon: 'mingcute:shopping-bag-1-line',
-    children: [
-      {
-        label: 'Tất Cả',
-        icon: 'mingcute:grid-line',
-        path: '/quan-ly-don-hang '
-      },
-      {
-        label: 'Đơn Trả hàng /Hoàn tiền hoặc hủy đơn ',
-        icon: 'mingcute:add-line',
-        path: '/don-tra-hang'
-      }
-    ]
+    title: 'Tổng quan',
+    items: [
+      { label: 'Dashboard', icon: 'lucide:home', path: ROUTES.HOME },
+    ],
   },
   {
-    label: 'Quản Lý Sản Phẩm',
-    icon: 'mingcute:box-3-line',
-    children: [
-      {
-        label: 'Tất Cả Sản Phẩm',
-        icon: 'mingcute:grid-line',
-        path: '/quan-ly-san-pham'
-      },
-      {
-        label: 'Thêm Sản Phẩm',
-        icon: 'mingcute:add-line',
-        path: '/them-san-pham'
-      }
-    ]
+    title: 'Quản lý người dùng',
+    items: [
+      { label: 'Người dùng', icon: 'lucide:users', path: ROUTES.USERS },
+      { label: 'Vai trò', icon: 'lucide:shield', path: ROUTES.ROLES },
+    ],
   },
   {
-    label: 'Kênh Marketing',
-    icon: 'tabler:tag',
-    path: '/kenh-marketing'
+    title: 'Nội dung',
+    items: [
+      { label: 'Danh sách phim', icon: 'lucide:film', path: ROUTES.ARTICLES },
+      { label: 'Phim bộ', icon: 'lucide:list-checks', path: ROUTES.SERIES },
+      { label: 'Danh mục', icon: 'lucide:folder-open', path: ROUTES.CATEGORIES },
+      { label: 'Hình ảnh', icon: 'lucide:image', path: ROUTES.IMAGES },
+      { label: 'Blog Post', icon: 'lucide:book-open', path: ROUTES.BLOG_POSTS },
+      { label: 'Tác giả', icon: 'lucide:user-check', path: ROUTES.AUTHORS },
+    ],
   },
   {
-    label: 'Chăm sóc khách hàng',
-    icon: 'mingcute:service-line',
-    children: [
-      { label: 'Tin nhắn', icon: 'mingcute:chat-1-line', path: '/tin-nhan' },
-      {
-        label: 'Đánh giá',
-        icon: 'material-symbols:star-rate',
-        path: '/danh-gia'
-      }
-    ]
+    title: 'Đồng bộ dữ liệu',
+    items: [
+      { label: 'KKPhim Sync', icon: 'lucide:refresh-cw', path: ROUTES.KKPHIM_SYNC },
+      { label: 'OPhim Sync', icon: 'lucide:refresh-cw', path: ROUTES.OPHIM_SYNC },
+      { label: 'KKMovie', icon: 'lucide:video', path: ROUTES.KKMOVIES },
+    ],
   },
   {
-    label: 'Tài Chính',
-    icon: 'mingcute:wallet-4-line',
-    children: [
-      {
-        label: 'Doanh thu',
-        icon: 'mingcute:coin-line',
-        path: '/doanh-thu'
-      },
-      {
-        label: 'Số dư',
-        icon: 'mingcute:wallet-3-line',
-        path: '/so-du'
-      },
-      {
-        label: 'Tài kkhoản ngân hàng',
-        icon: 'mingcute:bank-line',
-        path: '/tai-khoan-ngan-hang'
-      }
-    ]
+    title: 'Giao diện',
+    items: [
+      { label: 'Trang', icon: 'lucide:layout', path: ROUTES.PAGES },
+      { label: 'Menu', icon: 'lucide:menu', path: ROUTES.MENUS },
+      { label: 'Brand', icon: 'lucide:link', path: ROUTES.BRANDS },
+      { label: 'Sidebar', icon: 'lucide:panel-left', path: ROUTES.SIDEBAR },
+      { label: 'Phim Thịnh Hành', icon: 'lucide:trending-up', path: ROUTES.TRENDING_MOVIES },
+    ],
   },
   {
-    label: 'Dữ Liệu',
-    icon: 'mingcute:chart-bar-line',
-    children: [
-      {
-        label: 'Phân tích hành vi',
-        icon: 'mingcute:coin-line',
-        path: '/phan-tich-hanh-vi'
-      },
-      {
-        label: 'Hiệu quả bán hàng',
-        icon: 'mingcute:wallet-3-line',
-        path: '/hieu-qua-ban-hang'
-      }
-    ]
+    title: 'Tương tác',
+    items: [
+      { label: 'Bình luận', icon: 'lucide:message-square', path: ROUTES.COMMENTS },
+    ],
   },
   {
-    label: 'Quản lý shop',
-    icon: 'mingcute:store-2-line',
-    children: [
-      {
-        label: 'Hồ sơ ',
-        icon: 'mingcute:user-3-line',
-        path: '/ho-so'
-      },
-      {
-        label: 'Thiết lập Shop',
-        icon: 'material-symbols-light:settings-cinematic-blur-outline',
-        path: '/thiet-lap-shop'
-      }
-    ]
+    title: 'Hệ thống & công cụ',
+    items: [
+      { label: 'Robot.txt', icon: 'lucide:bot', path: ROUTES.ROBOT_TXT },
+      { label: 'Chuyển hướng', icon: 'lucide:monitor', path: ROUTES.REDIRECTIONS },
+      { label: 'Quản lý thông tin', icon: 'lucide:info', path: ROUTES.INFORMATION },
+      { label: 'Cấu hình AI', icon: 'lucide:sparkles', path: ROUTES.AI_CONFIG },
+      { label: 'Cài đặt', icon: 'lucide:settings', path: ROUTES.SETTINGS },
+    ],
   },
-  {
-    label: 'Quản trị viên',
-    icon: 'mingcute:settings-4-line',
-    children: [
-      {
-        label: 'Danh sách người dùng',
-        icon: 'mingcute:user-3-line',
-        path: '/quan-ly-nguoi-dung'
-      },
-      {
-        label: 'Phân quyền',
-        icon: 'streamline-kameleon-color:captain-shield',
-        path: '/quan-ly-nguoi-dung'
-      },
-      {
-        label: 'Thông báo',
-        icon: 'hugeicons:chat-notification-01',
-        path: '/quan-ly-nguoi-dung'
-      },
-      {
-        label: 'Bài viết',
-        icon: 'emojione-monotone:newspaper',
-        path: '/quan-ly-nguoi-dung'
-      }
-    ]
-  }
 ]
 
 export default function Sidebar() {
-  const [expandedItems, setExpandedItems] = useState<string[]>([])
+  const { theme, sidebarCollapsed, toggleSidebar } = useThemeStore()
+  const location = useLocation()
 
-  const toggleExpanded = (label: string) => {
-    setExpandedItems((prev) =>
-      prev.includes(label)
-        ? prev.filter((item) => item !== label)
-        : [...prev, label]
-    )
+  const isActive = (path?: string) => {
+    if (!path) return false
+    if (path === '/') return location.pathname === '/'
+    return location.pathname.startsWith(path)
   }
 
   return (
-    <aside className='h-full w-64 overflow-y-auto border-r border-gray-200 bg-white'>
-      <nav className=''>
-        <ul className='space-y-2'>
-          {menuItems.map((item) => (
-            <li key={item.label}>
-              <div
-                className={`flex cursor-pointer items-center justify-between rounded-md p-3 transition-colors hover:bg-gray-50 ${
-                  item.children ? 'text-gray-700' : 'text-gray-600'
-                }`}
-                onClick={() => item.children && toggleExpanded(item.label)}
-              >
-                <div className='flex items-center space-x-3'>
-                  <Icon icon={item.icon} className='h-5 w-5 text-gray-500' />
-                  <span className='text-sm font-medium'>{item.label}</span>
-                </div>
-                {item.children && (
-                  <Icon
-                    icon={
-                      expandedItems.includes(item.label)
-                        ? 'mingcute:up-line'
-                        : 'mingcute:down-line'
-                    }
-                    className='h-4 w-4 text-gray-400'
-                  />
-                )}
-              </div>
+    <aside
+      className={`relative flex h-dvh flex-shrink-0 flex-col border-r transition-all duration-300 ${sidebarCollapsed ? 'w-16' : 'w-64'}`}
+      style={{
+        backgroundColor: 'var(--card)',
+        borderColor: 'var(--border)',
+      }}
+    >
+      {/* Toggle Button */}
+      <button
+        onClick={toggleSidebar}
+        className='absolute -right-3 top-20 z-10 flex h-6 w-6 items-center justify-center rounded-full border shadow-sm transition-colors'
+        style={{
+          backgroundColor: 'var(--card)',
+          borderColor: 'var(--border)',
+        }}
+      >
+        <Icon
+          icon={sidebarCollapsed ? 'lucide:chevron-right' : 'lucide:chevron-left'}
+          className='h-3 w-3'
+          style={{ color: 'var(--muted-foreground)' }}
+        />
+      </button>
 
-              {item.children && expandedItems.includes(item.label) && (
-                <ul className='mt-2 ml-4 space-y-1'>
-                  {item.children.map((child) => (
-                    <li key={child.label}>
-                      <Link
-                        to={child.path || ''}
-                        className='flex cursor-pointer items-center space-x-3 rounded-md p-2 transition-colors hover:bg-gray-50'
-                      >
-                        <Icon
-                          icon={child.icon}
-                          className='h-4 w-4 text-gray-400'
-                        />
-                        <span className='text-sm text-gray-600'>
-                          {child.label}
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
-        </ul>
+      {/* Logo Section */}
+      <div
+        className={`flex h-14 items-center border-b ${sidebarCollapsed ? 'justify-center px-2' : 'px-4'}`}
+        style={{ borderColor: 'var(--border)' }}
+      >
+        <div
+          className='flex size-7 items-center justify-center rounded-sm text-white'
+          style={{ backgroundColor: 'var(--primary)' }}
+        >
+          <span className='text-lg font-semibold'>M</span>
+        </div>
+        {!sidebarCollapsed && (
+          <span className='ml-2 text-base font-medium' style={{ color: 'var(--card-foreground)' }}>
+            Dashboard
+          </span>
+        )}
+      </div>
+
+      <nav className='flex-1 overflow-y-auto py-3 scrollbar-hide'>
+        {menuSections.map((section) => (
+          <div key={section.title} className='mb-3'>
+            {!sidebarCollapsed && (
+              <div
+                className='px-4 py-1.5 text-xs font-medium tracking-wide'
+                style={{ color: 'var(--muted-foreground)' }}
+              >
+                {section.title}
+              </div>
+            )}
+            <ul className={`space-y-0.5 ${sidebarCollapsed ? 'px-1' : 'px-2'}`}>
+              {section.items.map((item) => {
+                const active = isActive(item.path)
+                return (
+                  <li key={item.path}>
+                    <Link
+                      to={item.path || '/'}
+                      className={`flex items-center rounded-md transition-all ${sidebarCollapsed ? 'justify-center p-2.5' : 'px-3 py-2'}`}
+                      style={{
+                        backgroundColor: active ? 'var(--muted)' : 'transparent',
+                        color: active ? 'var(--primary)' : 'var(--foreground)',
+                        borderLeft: active && !sidebarCollapsed ? `3px solid var(--primary)` : '3px solid transparent',
+                      }}
+                    >
+                      <Icon
+                        icon={item.icon}
+                        className={`h-[18px] w-[18px] flex-shrink-0 ${sidebarCollapsed ? '' : 'mr-2.5'}`}
+                        style={{ color: active ? 'var(--primary)' : 'var(--muted-foreground)' }}
+                      />
+                      {!sidebarCollapsed && (
+                        <span className='text-sm font-normal'>{item.label}</span>
+                      )}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        ))}
       </nav>
+
+      <style>{`
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}</style>
     </aside>
   )
 }

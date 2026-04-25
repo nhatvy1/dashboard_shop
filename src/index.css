@@ -1,14 +1,137 @@
 @import 'tailwindcss';
 @import '@heroui/styles';
 
-/* @import './styles/shadow.css'; */
+/* Color Scheme - Light Mode */
+:root {
+  color-scheme: light;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --primary: #2563eb;
+  --primary-foreground: #eff6ff;
+  --secondary: #e2e8f0;
+  --secondary-foreground: #0f172a;
+  --muted: #eef2ff;
+  --muted-foreground: #475569;
+  --accent: #16a34a;
+  --border: #e2e8f0;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --ring: #2563eb;
+  --shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
 
-/* Smooth scroll behavior */
+/* Color Scheme - Dark Mode */
+.dark {
+  color-scheme: dark;
+  --background: #030712;
+  --foreground: #f9fafb;
+  --primary: #3b82f6;
+  --primary-foreground: #eff6ff;
+  --secondary: #1e293b;
+  --secondary-foreground: #e5e7eb;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #22c55e;
+  --border: #1e293b;
+  --card: #0f172a;
+  --card-foreground: #f1f5f9;
+  --ring: #3b82f6;
+  --shadow: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.3);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-ring: var(--ring);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+}
+
+/* Base Styles */
 html {
   scroll-behavior: smooth;
 }
 
-/* Improve scroll performance */
 * {
-  scroll-margin-top: 128px; /* Offset for sticky header + nav */
+  scroll-margin-top: 128px;
+}
+
+/* Subtle gradient background */
+body {
+  background: var(--background);
+}
+
+/* Light mode subtle pattern */
+html:not(.dark) body {
+  background: linear-gradient(
+    135deg,
+    #f8fafc 0%,
+    #f1f5f9 25%,
+    #e2e8f0 50%,
+    #f8fafc 75%,
+    #f8fafc 100%
+  );
+  background-size: 400% 400%;
+  animation: gradientShift 60s ease infinite;
+}
+
+/* Dark mode subtle pattern */
+html.dark body {
+  background: linear-gradient(
+    135deg,
+    #030712 0%,
+    #0f172a 25%,
+    #1e293b 50%,
+    #0f172a 75%,
+    #030712 100%
+  );
+  background-size: 400% 400%;
+  animation: gradientShift 60s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Card hover effect */
+.card-hover {
+  transition: all 0.2s ease;
+}
+
+.card-hover:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-1px);
+}
+
+/* Smooth transitions for interactive elements */
+button, a, input, select {
+  transition: all 0.15s ease;
+}
+
+/* Override Hero UI primary color */
+:root {
+  --heroui-primary: var(--primary);
+  --heroui-primary-foreground: var(--primary-foreground);
 }

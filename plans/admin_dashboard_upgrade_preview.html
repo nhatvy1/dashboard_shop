@@ -1,0 +1,274 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .dash-wrap {
+    position: relative;
+    background: #0f172a;
+    border-radius: 12px;
+    overflow: hidden;
+    min-height: 480px;
+    font-family: var(--font-sans);
+  }
+
+  /* ===== ANIMATED GRID BACKGROUND ===== */
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(59,130,246,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,130,246,0.07) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: gridShift 20s linear infinite;
+  }
+
+  @keyframes gridShift {
+    0%   { background-position: 0 0; }
+    100% { background-position: 40px 40px; }
+  }
+
+  /* Floating squares */
+  .sq {
+    position: absolute;
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 6px;
+    animation: floatSq linear infinite;
+    opacity: 0;
+  }
+
+  @keyframes floatSq {
+    0%   { transform: translateY(0) rotate(0deg);   opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.6; }
+    100% { transform: translateY(-320px) rotate(180deg); opacity: 0; }
+  }
+
+  .sq:nth-child(1)  { width:18px; height:18px; left:8%;  bottom:-20px; animation-duration:9s;  animation-delay:0s;   background: rgba(59,130,246,0.08); }
+  .sq:nth-child(2)  { width:28px; height:28px; left:20%; bottom:-30px; animation-duration:12s; animation-delay:1.5s; background: rgba(99,102,241,0.08); }
+  .sq:nth-child(3)  { width:12px; height:12px; left:35%; bottom:-15px; animation-duration:8s;  animation-delay:3s;   background: rgba(34,197,94,0.08); }
+  .sq:nth-child(4)  { width:22px; height:22px; left:52%; bottom:-25px; animation-duration:11s; animation-delay:0.8s; background: rgba(59,130,246,0.1); }
+  .sq:nth-child(5)  { width:16px; height:16px; left:68%; bottom:-20px; animation-duration:10s; animation-delay:2.5s; background: rgba(99,102,241,0.06); }
+  .sq:nth-child(6)  { width:30px; height:30px; left:80%; bottom:-35px; animation-duration:13s; animation-delay:0.2s; background: rgba(59,130,246,0.05); }
+  .sq:nth-child(7)  { width:10px; height:10px; left:92%; bottom:-15px; animation-duration:7s;  animation-delay:4s;   background: rgba(34,197,94,0.1); }
+  .sq:nth-child(8)  { width:20px; height:20px; left:44%; bottom:-22px; animation-duration:14s; animation-delay:1s;   background: rgba(59,130,246,0.07); }
+
+  /* Glow orbs */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.18;
+    pointer-events: none;
+  }
+  .orb-1 { width:200px; height:200px; top:-60px;  left:-40px;  background: #3b82f6; }
+  .orb-2 { width:180px; height:180px; bottom:-50px; right:-30px; background: #6366f1; }
+  .orb-3 { width:120px; height:120px; top:50%; left:50%; transform:translate(-50%,-50%); background: #22c55e; opacity: 0.08; }
+
+  /* ===== CONTENT ===== */
+  .content {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+  }
+
+  /* Topbar */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 15px; font-weight: 500; color: #f1f5f9;
+  }
+  .logo-icon {
+    width: 28px; height: 28px; border-radius: 6px;
+    background: linear-gradient(135deg, #3b82f6, #6366f1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: white;
+  }
+  .topbar-right { display: flex; align-items: center; gap: 10px; }
+  .avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #22c55e);
+    border: 2px solid rgba(255,255,255,0.15);
+  }
+  .badge {
+    font-size: 11px; padding: 3px 8px; border-radius: 20px;
+    background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3);
+  }
+
+  /* Stat cards */
+  .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 14px; }
+  .stat-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .stat-card:hover { border-color: rgba(59,130,246,0.4); }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: 10px 10px 0 0;
+  }
+  .stat-card.blue::before  { background: linear-gradient(90deg, #3b82f6, transparent); }
+  .stat-card.green::before { background: linear-gradient(90deg, #22c55e, transparent); }
+  .stat-card.purple::before{ background: linear-gradient(90deg, #a78bfa, transparent); }
+  .stat-card.amber::before { background: linear-gradient(90deg, #f59e0b, transparent); }
+
+  .stat-label { font-size: 11px; color: #64748b; margin-bottom: 6px; }
+  .stat-val   { font-size: 22px; font-weight: 500; color: #f1f5f9; line-height: 1; margin-bottom: 4px; }
+  .stat-sub   { font-size: 11px; color: #22c55e; }
+  .stat-sub.down { color: #f87171; }
+
+  /* Main area */
+  .main-grid { display: grid; grid-template-columns: 1fr 220px; gap: 10px; }
+
+  .chart-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .card-title { font-size: 13px; font-weight: 500; color: #94a3b8; margin-bottom: 12px; }
+
+  /* Fake bar chart */
+  .bars { display: flex; align-items: flex-end; gap: 6px; height: 90px; }
+  .bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .bar {
+    width: 100%; border-radius: 4px 4px 0 0;
+    background: linear-gradient(to top, #3b82f6, #6366f1);
+    opacity: 0.75;
+    transition: opacity 0.2s;
+    animation: barGrow 0.8s ease both;
+  }
+  .bar:hover { opacity: 1; }
+  @keyframes barGrow {
+    from { transform: scaleY(0); transform-origin: bottom; }
+    to   { transform: scaleY(1); }
+  }
+  .bar-label { font-size: 10px; color: #475569; }
+
+  /* Table card */
+  .table-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .table-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 12px;
+  }
+  .table-row:last-child { border-bottom: none; }
+  .tr-name { color: #cbd5e1; }
+  .tr-pill {
+    padding: 2px 7px; border-radius: 20px; font-size: 10px;
+  }
+  .active  { background: rgba(34,197,94,0.15);  color: #4ade80; }
+  .pending { background: rgba(245,158,11,0.15); color: #fbbf24; }
+  .offline { background: rgba(248,113,113,0.15);color: #f87171; }
+  .tr-val { color: #64748b; font-size: 11px; }
+</style>
+
+<div class="dash-wrap">
+  <!-- Background layers -->
+  <div class="grid-bg"></div>
+  <div class="sq"></div><div class="sq"></div><div class="sq"></div><div class="sq"></div>
+  <div class="sq"></div><div class="sq"></div><div class="sq"></div><div class="sq"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="content">
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="logo">
+        <div class="logo-icon">A</div>
+        Admin Panel
+      </div>
+      <div class="topbar-right">
+        <span class="badge">● Live</span>
+        <div class="avatar"></div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat-card blue">
+        <div class="stat-label">Total Revenue</div>
+        <div class="stat-val">$84,210</div>
+        <div class="stat-sub">▲ 12.4% this month</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-label">Active Users</div>
+        <div class="stat-val">3,402</div>
+        <div class="stat-sub">▲ 8.1% this week</div>
+      </div>
+      <div class="stat-card purple">
+        <div class="stat-label">New Orders</div>
+        <div class="stat-val">1,087</div>
+        <div class="stat-sub">▲ 5.3% today</div>
+      </div>
+      <div class="stat-card amber">
+        <div class="stat-label">Churn Rate</div>
+        <div class="stat-val">2.4%</div>
+        <div class="stat-sub down">▼ 0.8% vs last</div>
+      </div>
+    </div>
+
+    <!-- Main -->
+    <div class="main-grid">
+      <div class="chart-card">
+        <div class="card-title">Revenue overview — last 7 days</div>
+        <div class="bars">
+          <div class="bar-wrap"><div class="bar" style="height:45%;animation-delay:.05s"></div><div class="bar-label">Mon</div></div>
+          <div class="bar-wrap"><div class="bar" style="height:60%;animation-delay:.1s"></div><div class="bar-label">Tue</div></div>
+          <div class="bar-wrap"><div class="bar" style="height:40%;animation-delay:.15s"></div><div class="bar-label">Wed</div></div>
+          <div class="bar-wrap"><div class="bar" style="height:80%;animation-delay:.2s"></div><div class="bar-label">Thu</div></div>
+          <div class="bar-wrap"><div class="bar" style="height:55%;animation-delay:.25s"></div><div class="bar-label">Fri</div></div>
+          <div class="bar-wrap"><div class="bar" style="height:95%;animation-delay:.3s"></div><div class="bar-label">Sat</div></div>
+          <div class="bar-wrap"><div class="bar" style="height:70%;animation-delay:.35s"></div><div class="bar-label">Sun</div></div>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="card-title">Recent users</div>
+        <div class="table-row">
+          <span class="tr-name">Minh Tuấn</span>
+          <span class="tr-pill active">Active</span>
+          <span class="tr-val">$320</span>
+        </div>
+        <div class="table-row">
+          <span class="tr-name">Lan Anh</span>
+          <span class="tr-pill pending">Pending</span>
+          <span class="tr-val">$120</span>
+        </div>
+        <div class="table-row">
+          <span class="tr-name">Quốc Bảo</span>
+          <span class="tr-pill active">Active</span>
+          <span class="tr-val">$540</span>
+        </div>
+        <div class="table-row">
+          <span class="tr-name">Thu Hà</span>
+          <span class="tr-pill offline">Offline</span>
+          <span class="tr-val">$80</span>
+        </div>
+        <div class="table-row">
+          <span class="tr-name">Đăng Khoa</span>
+          <span class="tr-pill active">Active</span>
+          <span class="tr-val">$210</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
