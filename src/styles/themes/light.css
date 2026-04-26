@@ -1,0 +1,87 @@
+/* src/styles/themes/light.css */
+[data-theme="light"], :root {
+
+  /* === Background layers === */
+  --color-bg-base:        #f0f2f5;
+  --color-bg-surface:     #ffffff;
+  --color-bg-elevated:    #ffffff;
+  --color-bg-subtle:      #f7f8fa;
+  --color-bg-inverse:     #1a1d2e;
+
+  /* === Border === */
+  --color-border-base:    #e5e8ef;
+  --color-border-strong:   #c8cdd8;
+  --color-border-focus:    #6366f1;
+
+  /* === Text === */
+  --color-text-primary:   #111827;
+  --color-text-secondary: #6b7280;
+  --color-text-tertiary:  #9ca3af;
+  --color-text-disabled:  #d1d5db;
+  --color-text-inverse:   #ffffff;
+  --color-text-link:      #6366f1;
+
+  /* === Brand / Accent (từ logo ophim: cam-vàng) === */
+  --color-brand-primary:        #f59e0b;
+  --color-brand-primary-hover:  #d97706;
+  --color-brand-secondary:       #6366f1;
+  --color-brand-secondary-hover: #4f46e5;
+
+  /* === Semantic Status === */
+  --color-success:        #10b981;
+  --color-success-bg:     #d1fae5;
+  --color-success-text:   #065f46;
+
+  --color-warning:        #f59e0b;
+  --color-warning-bg:     #fef3c7;
+  --color-warning-text:   #92400e;
+
+  --color-error:          #ef4444;
+  --color-error-bg:       #fee2e2;
+  --color-error-text:     #991b1b;
+
+  --color-info:           #6366f1;
+  --color-info-bg:        #eef2ff;
+  --color-info-text:      #3730a3;
+
+  /* === Table === */
+  --color-table-header-bg:    #f7f8fa;
+  --color-table-row-bg:       #ffffff;
+  --color-table-row-hover:    #f0f2f8;
+  --color-table-row-stripe:   #f9fafb;
+  --color-table-border:        #e5e8ef;
+
+  /* === Sidebar === */
+  --color-sidebar-bg:          #ffffff;
+  --color-sidebar-item-hover:  #f0f2f8;
+  --color-sidebar-item-active: #eef2ff;
+  --color-sidebar-text:        #374151;
+  --color-sidebar-text-active:  #6366f1;
+
+  /* === Topbar / Navbar === */
+  --color-topbar-bg:          #ffffff;
+  --color-topbar-border:       #e5e8ef;
+  --color-topbar-text:        #374151;
+
+  /* === Badge / Tag === */
+  --color-badge-episode-bg:   #6366f1;
+  --color-badge-episode-text: #ffffff;
+  --color-badge-type-bg:      #f0f2f8;
+  --color-badge-type-text:    #374151;
+  --color-badge-tmdb-bg:      #032541;
+  --color-badge-tmdb-text:    #01d277;
+  --color-badge-imdb-bg:      #f5c518;
+  --color-badge-imdb-text:    #000000;
+
+  /* === Input / Form === */
+  --color-input-bg:           #ffffff;
+  --color-input-border:       #d1d5db;
+  --color-input-border-focus: #6366f1;
+  --color-input-text:         #111827;
+  --color-input-placeholder:  #9ca3af;
+
+  /* === Shadow === */
+  --shadow-sm:  0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:  0 4px 16px rgba(0,0,0,.08);
+  --shadow-lg:  0 8px 32px rgba(0,0,0,.10);
+}

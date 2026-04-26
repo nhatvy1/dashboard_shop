@@ -4,13 +4,16 @@ import { Icon } from '@iconify/react'
 import { useThemeStore } from '@/shared/stores/theme-store'
 
 export default function Header() {
-  const { theme, toggleTheme } = useThemeStore()
-  const isDark = theme === 'dark'
+  const { resolvedTheme, toggleTheme } = useThemeStore()
+  const isDark = resolvedTheme === 'dark'
 
   return (
     <header
       className='flex h-16 items-center justify-between border-b px-6'
-      style={{ borderColor: 'var(--border)', backgroundColor: 'var(--card)' }}
+      style={{
+        borderColor: 'var(--color-border-base)',
+        backgroundColor: 'var(--color-topbar)',
+      }}
     >
       <div className='flex items-center space-x-3'>
         {/* Empty - logo moved to sidebar */}
@@ -20,7 +23,7 @@ export default function Header() {
         <button
           onClick={toggleTheme}
           className='rounded-md p-2 transition-colors'
-          style={{ color: 'var(--muted-foreground)' }}
+          style={{ color: 'var(--color-text-secondary)' }}
         >
           <Icon icon={isDark ? 'lucide:sun' : 'lucide:moon'} className='h-5 w-5' />
         </button>

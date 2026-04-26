@@ -96,7 +96,7 @@ const menuSections: { title: string; items: MenuItem[] }[] = [
 ]
 
 export default function Sidebar() {
-  const { theme, sidebarCollapsed, toggleSidebar } = useThemeStore()
+  const { sidebarCollapsed, toggleSidebar } = useThemeStore()
   const location = useLocation()
 
   const isActive = (path?: string) => {
@@ -107,41 +107,41 @@ export default function Sidebar() {
 
   return (
     <aside
-      className={`relative flex h-dvh flex-shrink-0 flex-col border-r transition-all duration-300 ${sidebarCollapsed ? 'w-16' : 'w-64'}`}
+      className={`relative flex h-dvh shrink-0 flex-col border-r transition-all duration-300 ${sidebarCollapsed ? 'w-16' : 'w-64'}`}
       style={{
-        backgroundColor: 'var(--card)',
-        borderColor: 'var(--border)',
+        backgroundColor: 'var(--color-sidebar)',
+        borderColor: 'var(--color-border-base)',
       }}
     >
       {/* Toggle Button */}
       <button
         onClick={toggleSidebar}
-        className='absolute -right-3 top-20 z-10 flex h-6 w-6 items-center justify-center rounded-full border shadow-sm transition-colors'
+        className='absolute -right-3 top-17 z-10 flex h-6 w-6 items-center justify-center rounded-full border shadow-sm transition-colors'
         style={{
-          backgroundColor: 'var(--card)',
-          borderColor: 'var(--border)',
+          backgroundColor: 'var(--color-sidebar)',
+          borderColor: 'var(--color-border-base)',
         }}
       >
         <Icon
           icon={sidebarCollapsed ? 'lucide:chevron-right' : 'lucide:chevron-left'}
           className='h-3 w-3'
-          style={{ color: 'var(--muted-foreground)' }}
+          style={{ color: 'var(--color-text-secondary)' }}
         />
       </button>
 
       {/* Logo Section */}
       <div
-        className={`flex h-14 items-center border-b ${sidebarCollapsed ? 'justify-center px-2' : 'px-4'}`}
-        style={{ borderColor: 'var(--border)' }}
+        className={`flex h-16 items-center border-b ${sidebarCollapsed ? 'justify-center px-2' : 'px-4'}`}
+        style={{ borderColor: 'var(--color-border-base)' }}
       >
         <div
           className='flex size-7 items-center justify-center rounded-sm text-white'
-          style={{ backgroundColor: 'var(--primary)' }}
+          style={{ backgroundColor: 'var(--color-brand-secondary)' }}
         >
           <span className='text-lg font-semibold'>M</span>
         </div>
         {!sidebarCollapsed && (
-          <span className='ml-2 text-base font-medium' style={{ color: 'var(--card-foreground)' }}>
+          <span className='ml-2 text-base font-medium' style={{ color: 'var(--color-text-primary)' }}>
             Dashboard
           </span>
         )}
@@ -153,7 +153,7 @@ export default function Sidebar() {
             {!sidebarCollapsed && (
               <div
                 className='px-4 py-1.5 text-xs font-medium tracking-wide'
-                style={{ color: 'var(--muted-foreground)' }}
+                style={{ color: 'var(--color-text-secondary)' }}
               >
                 {section.title}
               </div>
@@ -167,15 +167,15 @@ export default function Sidebar() {
                       to={item.path || '/'}
                       className={`flex items-center rounded-md transition-all ${sidebarCollapsed ? 'justify-center p-2.5' : 'px-3 py-2'}`}
                       style={{
-                        backgroundColor: active ? 'var(--muted)' : 'transparent',
-                        color: active ? 'var(--primary)' : 'var(--foreground)',
-                        borderLeft: active && !sidebarCollapsed ? `3px solid var(--primary)` : '3px solid transparent',
+                        backgroundColor: active ? 'var(--color-sidebar-active)' : 'transparent',
+                        color: active ? 'var(--color-sidebar-text-active)' : 'var(--color-sidebar-text)',
+                        borderLeft: active && !sidebarCollapsed ? '3px solid var(--color-brand-secondary)' : '3px solid transparent',
                       }}
                     >
                       <Icon
                         icon={item.icon}
-                        className={`h-[18px] w-[18px] flex-shrink-0 ${sidebarCollapsed ? '' : 'mr-2.5'}`}
-                        style={{ color: active ? 'var(--primary)' : 'var(--muted-foreground)' }}
+                        className={`h-[18px] w-[18px] shrink-0 ${sidebarCollapsed ? '' : 'mr-2.5'}`}
+                        style={{ color: active ? 'var(--color-sidebar-text-active)' : 'var(--color-sidebar-text)' }}
                       />
                       {!sidebarCollapsed && (
                         <span className='text-sm font-normal'>{item.label}</span>

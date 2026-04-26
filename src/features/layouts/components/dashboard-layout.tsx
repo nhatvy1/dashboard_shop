@@ -1,16 +1,15 @@
 import { Outlet } from 'react-router'
-import { useThemeStore } from '@/shared/stores/theme-store'
 import Header from './header'
 import Sidebar from './sidebar'
 
 export default function DashboardLayout() {
-  const { theme } = useThemeStore()
-  const isDark = theme === 'dark'
-
   return (
     <div
       className='flex h-dvh'
-      style={{ backgroundColor: 'var(--background)', color: 'var(--foreground)' }}
+      style={{
+        backgroundColor: 'var(--color-bg-base)',
+        color: 'var(--color-text-primary)',
+      }}
     >
       {/* Sidebar - Left Fixed */}
       <Sidebar />
@@ -21,7 +20,7 @@ export default function DashboardLayout() {
         <Header />
 
         {/* Main Content */}
-        <main className='flex-1 overflow-auto p-6'>
+        <main className='flex-1 overflow-auto p-6 [&::-webkit-scrollbar]:w-0'>
           <div className='min-w-[1200px]'>
             <Outlet />
           </div>
