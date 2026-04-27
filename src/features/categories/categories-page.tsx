@@ -5,6 +5,8 @@ import type { ICategory } from './types/category.type'
 import { Icon } from '@iconify/react'
 import CategoryFormModal from './components/category-form-modal'
 import { Button } from '@heroui/react'
+import { PaginationWithSelect } from '@/components/ui/pagination'
+import { useQueryParams } from '@/shared/hooks/use-query-params'
 
 type CategoryModalState = {
   isOpen: boolean
@@ -13,7 +15,11 @@ type CategoryModalState = {
 }
 
 export default function CategoriesPage() {
-  const { data } = useGetCategoryQuery()
+  const { getQueryParamAs } = useQueryParams()
+  const page = getQueryParamAs('page', Number, 1)
+  const limit = getQueryParamAs('limit', Number, 10)
+
+  const { data } = useGetCategoryQuery({ page, limit })
 
   const [modal, setModal] = useState<CategoryModalState>({
     isOpen: false,
@@ -103,8 +109,13 @@ export default function CategoriesPage() {
       >
         <DataTable
           columns={categoriesColumns}
-          data={data?.data.data ?? []}
+          data={data?.data.data.data ?? []}
           selectable
+        />
+
+        <PaginationWithSelect
+          total={data?.data.data.total ?? 0}
+          totalPages={data?.data.data.totalPages ?? 0}
         />
       </div>
       <CategoryFormModal

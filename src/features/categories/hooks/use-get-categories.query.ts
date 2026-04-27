@@ -6,6 +6,7 @@ import {
 import type { IGetCatesRes } from '../types/category.response'
 import type { AxiosResponse } from 'axios'
 import catesAPpi from '../categories.service'
+import type { ICategoryParams } from '../types/category.params'
 
 type Options = Omit<
   UseQueryOptions<
@@ -16,11 +17,10 @@ type Options = Omit<
   >,
   'queryKey' | 'queryFn'
 >
-
-export default function useGetCategoryQuery(options?: Options) {
+export default function useGetCategoryQuery(params: ICategoryParams, options?: Options) {
   return useQuery({
-    queryKey: ['category'],
-    queryFn: () => catesAPpi.getCategories(),
+    queryKey: ['category', params.page, params.limit],
+    queryFn: () => catesAPpi.getCategories(params),
     ...options
   })
 }

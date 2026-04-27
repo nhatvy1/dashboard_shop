@@ -9,6 +9,8 @@ import type { ICategory } from './types/category.type'
 import type { IBaseRes } from '@/shared/commons/types/response'
 import type { AxiosResponse } from 'axios'
 import type { ICreateCatesBody, IUpdateCatesBody } from './types/category.body'
+import type { ICategoryParams } from './types/category.params'
+import queryString from 'query-string'
 
 class CategoriesService {
   private readonly axiosBearerClient: AxiosBearerClient
@@ -19,8 +21,9 @@ class CategoriesService {
     )
   }
 
-  getCategories(): Promise<AxiosResponse<IGetCatesRes>> {
-    return this.axiosBearerClient.get<IGetCatesRes>('/')
+  getCategories(params: ICategoryParams): Promise<AxiosResponse<IGetCatesRes>> {
+    const strParams = queryString.stringify(params)
+    return this.axiosBearerClient.get<IGetCatesRes>(`/paginated?${strParams}`)
   }
 
   createCategory(

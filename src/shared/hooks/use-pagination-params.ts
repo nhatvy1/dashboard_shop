@@ -18,7 +18,7 @@ interface UsePaginationParamsResult {
 export function usePaginationParams(
   options: UsePaginationParamsOptions = {}
 ): UsePaginationParamsResult {
-  const { defaultPage = 1, defaultLimit = 10, limitOptions = [10, 20, 50, 100] } = options
+  const { defaultPage = 1, defaultLimit = 10 } = options
   const [searchParams, setSearchParams] = useSearchParams()
 
   const page = searchParams.get('page') ? parseInt(searchParams.get('page')!, 10) : defaultPage
