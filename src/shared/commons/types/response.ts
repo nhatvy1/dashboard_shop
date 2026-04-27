@@ -3,3 +3,9 @@ export interface IBaseRes<T> {
   statusCode: number
   data: T
 }
+
+export interface IBasePagination {
+  total: number;
+  page: number
+  limit: number
+}

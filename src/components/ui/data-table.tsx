@@ -158,7 +158,7 @@ export function DataTable<T extends WithRowId>({
 
           {/* ── Body ── */}
           <Table.Body>
-            {sortedData.map((row) => (
+            {sortedData?.map((row) => (
               <Table.Row
                 className='first:rounded-t-0 h-14'
                 key={getRowKey(row)}

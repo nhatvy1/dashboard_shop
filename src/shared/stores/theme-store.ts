@@ -24,7 +24,7 @@ const resolveTheme = (theme: Theme): 'light' | 'dark' => {
 
 export const useThemeStore = create<ThemeStore>()(
   persist(
-    (set, get) => ({
+    (set, _) => ({
       theme: 'system',
       sidebarCollapsed: false,
       resolvedTheme: getSystemTheme(),

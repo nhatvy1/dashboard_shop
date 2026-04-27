@@ -9,7 +9,7 @@ export function UserProfileDropdown() {
           className='flex cursor-pointer items-center gap-2 bg-transparent'
           style={{ color: 'var(--color-text-primary)' }}
         >
-          <Avatar isBordered>
+          <Avatar>
             <Avatar.Image
               src='https://img.heroui.chat/image/avatar?w=400&h=400&u=3'
               alt='User'
@@ -28,7 +28,6 @@ export function UserProfileDropdown() {
               <Avatar
                 className='border'
                 size='lg'
-                isBordered
               >
                 <Avatar.Image
                   src='https://img.heroui.chat/image/avatar?w=400&h=400&u=3'

@@ -3,15 +3,15 @@ import {
   type QueryKey,
   type UseQueryOptions
 } from '@tanstack/react-query'
-import type { IGetCategoriesRes } from '../types/category.response'
+import type { IGetCatesRes } from '../types/category.response'
 import type { AxiosResponse } from 'axios'
 import catesAPpi from '../categories.service'
 
 type Options = Omit<
   UseQueryOptions<
-    AxiosResponse<IGetCategoriesRes>,
+    AxiosResponse<IGetCatesRes>,
     Error,
-    IGetCategoriesRes,
+    AxiosResponse<IGetCatesRes>,
     QueryKey
   >,
   'queryKey' | 'queryFn'

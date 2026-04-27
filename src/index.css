@@ -134,9 +134,9 @@
   --font-mono: var(--font-mono);
 
   /* Transition Duration */
-  --transition-duration-fast: 150ms;
+  /* --transition-duration-fast: 150ms;
   --transition-duration-base: 250ms;
-  --transition-duration-slow: 400ms;
+  --transition-duration-slow: 400ms; */
 }
 
 /* Base Styles */
